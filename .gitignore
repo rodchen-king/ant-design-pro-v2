@@ -37,3 +37,6 @@ functions/mock
 screenshot
 .firebase
 .eslintcache
+src/pages/.umi/dva.js
+src/pages/.umi/router.js
+.temp/ant-design-pro.less
