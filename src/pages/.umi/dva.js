@@ -26,18 +26,8 @@ export function _onCreate() {
       .default
   });
   app.model({
-    namespace: "list",
-    ...require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/models/list.js")
-      .default
-  });
-  app.model({
     namespace: "login",
     ...require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/models/login.js")
-      .default
-  });
-  app.model({
-    namespace: "project",
-    ...require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/models/project.js")
       .default
   });
   app.model({
