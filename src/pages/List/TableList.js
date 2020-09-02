@@ -27,7 +27,6 @@ import PageHeaderWrapper from "@/components/PageHeaderWrapper";
 import injectEnumFunction from "@/common/commonEnum";
 import styles from "./TableList.less";
 
-// eslint-disable-next-line camelcase
 const { userAccountTypeEnum } = injectEnumFunction(["userAccountTypeEnum"]);
 
 const FormItem = Form.Item;
@@ -294,7 +293,8 @@ class UpdateForm extends PureComponent {
 }
 
 /* eslint react/no-multi-comp:0 */
-@connect(({ rule, loading }) => ({
+@connect(({ rule, loading, dictionary }) => ({
+  dictionary,
   rule,
   loading: loading.models.rule
 }))
@@ -376,6 +376,18 @@ class TableList extends PureComponent {
     const { dispatch } = this.props;
     dispatch({
       type: "rule/fetch"
+    });
+
+    dispatch({
+      type: "dictionary/getDictionaryBatchInModal",
+      payload: {
+        codeList: ["class", "brand"],
+        codeParams: {
+          brand: {
+            type: 3
+          }
+        }
+      }
     });
   }
 

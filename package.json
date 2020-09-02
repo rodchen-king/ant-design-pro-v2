@@ -45,7 +45,7 @@
     "omit.js": "^1.0.0",
     "path-to-regexp": "^2.4.0",
     "prop-types": "^15.5.10",
-    "qs": "^6.5.2",
+    "qs": "^6.9.4",
     "rc-animate": "^2.4.4",
     "react": "^16.5.1",
     "react-container-query": "^0.11.0",

@@ -1,5 +1,6 @@
 import moment from "moment";
 import React from "react";
+import { message } from "antd";
 import nzh from "nzh/cn";
 import { parse, stringify } from "qs";
 
@@ -187,4 +188,21 @@ export function formatWan(val) {
 // 给官方演示站点用，用于关闭真实开发环境不需要使用的特性
 export function isAntdPro() {
   return window.location.hostname === "preview.pro.ant.design";
+}
+
+// 系统层级
+/**
+ * 处理错误请求
+ * @param {*} response         返回结果
+ * @param {*} needBackError    是否需要将错误回传到页面单独处理
+ */
+export function handleError(response, needBackError) {
+  if (!response || response.code !== "000000") {
+    if (response && !needBackError) {
+      message.error(response.msg || response.errmsg);
+    }
+    return false;
+  }
+
+  return true;
 }
