@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 function fixedZero(val) {
   return val * 1 < 10 ? `0${val}` : val;
@@ -7,18 +7,18 @@ const initTime = props => {
   let lastTime = 0;
   let targetTime = 0;
   try {
-    if (Object.prototype.toString.call(props.target) === "[object Date]") {
+    if (Object.prototype.toString.call(props.target) === '[object Date]') {
       targetTime = props.target.getTime();
     } else {
       targetTime = new Date(props.target).getTime();
     }
   } catch (e) {
-    throw new Error("invalid target prop", e);
+    throw new Error('invalid target prop', e);
   }
 
   lastTime = targetTime - new Date().getTime();
   return {
-    lastTime: lastTime < 0 ? 0 : lastTime
+    lastTime: lastTime < 0 ? 0 : lastTime,
   };
 };
 
@@ -31,7 +31,7 @@ class CountDown extends Component {
     super(props);
     const { lastTime } = initTime(props);
     this.state = {
-      lastTime
+      lastTime,
     };
   }
 
@@ -39,7 +39,7 @@ class CountDown extends Component {
     const { lastTime } = initTime(nextProps);
     if (preState.lastTime !== lastTime) {
       return {
-        lastTime
+        lastTime,
       };
     }
     return null;
@@ -87,7 +87,7 @@ class CountDown extends Component {
         clearTimeout(this.timer);
         this.setState(
           {
-            lastTime: 0
+            lastTime: 0,
           },
           () => {
             if (onEnd) {
@@ -99,7 +99,7 @@ class CountDown extends Component {
         lastTime -= this.interval;
         this.setState(
           {
-            lastTime
+            lastTime,
           },
           () => {
             this.tick();

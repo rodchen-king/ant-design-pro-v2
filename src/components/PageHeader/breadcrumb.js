@@ -1,8 +1,8 @@
-import React, { PureComponent, createElement } from "react";
-import pathToRegexp from "path-to-regexp";
-import { Breadcrumb } from "antd";
-import styles from "./index.less";
-import { urlToList } from "../_utils/pathTools";
+import React, { PureComponent, createElement } from 'react';
+import pathToRegexp from 'path-to-regexp';
+import { Breadcrumb } from 'antd';
+import styles from './index.less';
+import { urlToList } from '../_utils/pathTools';
 
 export const getBreadcrumb = (breadcrumbNameMap, url) => {
   let breadcrumb = breadcrumbNameMap[url];
@@ -18,7 +18,7 @@ export const getBreadcrumb = (breadcrumbNameMap, url) => {
 
 export default class BreadcrumbView extends PureComponent {
   state = {
-    breadcrumb: null
+    breadcrumb: null,
   };
 
   componentDidMount() {
@@ -39,7 +39,7 @@ export default class BreadcrumbView extends PureComponent {
   getBreadcrumbDom = () => {
     const breadcrumb = this.conversionBreadcrumbList();
     this.setState({
-      breadcrumb
+      breadcrumb,
     });
   };
 
@@ -49,18 +49,13 @@ export default class BreadcrumbView extends PureComponent {
       routes,
       params,
       routerLocation: location,
-      breadcrumbNameMap
+      breadcrumbNameMap,
     };
   };
 
   // Generated according to props
   conversionFromProps = () => {
-    const {
-      breadcrumbList,
-      breadcrumbSeparator,
-      itemRender,
-      linkElement = "a"
-    } = this.props;
+    const { breadcrumbList, breadcrumbSeparator, itemRender, linkElement = 'a' } = this.props;
     return (
       <Breadcrumb className={styles.breadcrumb} separator={breadcrumbSeparator}>
         {breadcrumbList.map(item => {
@@ -71,7 +66,7 @@ export default class BreadcrumbView extends PureComponent {
                 ? createElement(
                     linkElement,
                     {
-                      [linkElement === "a" ? "href" : "to"]: item.href
+                      [linkElement === 'a' ? 'href' : 'to']: item.href,
                     },
                     title
                   )
@@ -84,12 +79,7 @@ export default class BreadcrumbView extends PureComponent {
   };
 
   conversionFromLocation = (routerLocation, breadcrumbNameMap) => {
-    const {
-      breadcrumbSeparator,
-      home,
-      itemRender,
-      linkElement = "a"
-    } = this.props;
+    const { breadcrumbSeparator, home, itemRender, linkElement = 'a' } = this.props;
     // Convert the url to an array
     const pathSnippets = urlToList(routerLocation.pathname);
     // Loop data mosaic routing
@@ -98,16 +88,13 @@ export default class BreadcrumbView extends PureComponent {
       if (currentBreadcrumb.inherited) {
         return null;
       }
-      const isLinkable =
-        index !== pathSnippets.length - 1 && currentBreadcrumb.component;
-      const name = itemRender
-        ? itemRender(currentBreadcrumb)
-        : currentBreadcrumb.name;
+      const isLinkable = index !== pathSnippets.length - 1 && currentBreadcrumb.component;
+      const name = itemRender ? itemRender(currentBreadcrumb) : currentBreadcrumb.name;
       return currentBreadcrumb.name && !currentBreadcrumb.hideInBreadcrumb ? (
         <Breadcrumb.Item key={url}>
           {createElement(
-            isLinkable ? linkElement : "span",
-            { [linkElement === "a" ? "href" : "to"]: url },
+            isLinkable ? linkElement : 'span',
+            { [linkElement === 'a' ? 'href' : 'to']: url },
             name
           )}
         </Breadcrumb.Item>
@@ -119,9 +106,9 @@ export default class BreadcrumbView extends PureComponent {
         {createElement(
           linkElement,
           {
-            [linkElement === "a" ? "href" : "to"]: "/"
+            [linkElement === 'a' ? 'href' : 'to']: '/',
           },
-          home || "Home"
+          home || 'Home'
         )}
       </Breadcrumb.Item>
     );
@@ -138,12 +125,7 @@ export default class BreadcrumbView extends PureComponent {
    */
   conversionBreadcrumbList = () => {
     const { breadcrumbList, breadcrumbSeparator } = this.props;
-    const {
-      routes,
-      params,
-      routerLocation,
-      breadcrumbNameMap
-    } = this.getBreadcrumbProps();
+    const { routes, params, routerLocation, breadcrumbNameMap } = this.getBreadcrumbProps();
     if (breadcrumbList && breadcrumbList.length) {
       return this.conversionFromProps();
     }
@@ -171,7 +153,7 @@ export default class BreadcrumbView extends PureComponent {
   // 渲染Breadcrumb 子节点
   // Render the Breadcrumb child node
   itemRender = (route, params, routes, paths) => {
-    const { linkElement = "a" } = this.props;
+    const { linkElement = 'a' } = this.props;
     const last = routes.indexOf(route) === routes.length - 1;
     return last || !route.component ? (
       <span>{route.breadcrumbName}</span>
@@ -179,8 +161,8 @@ export default class BreadcrumbView extends PureComponent {
       createElement(
         linkElement,
         {
-          href: paths.join("/") || "/",
-          to: paths.join("/") || "/"
+          href: paths.join('/') || '/',
+          to: paths.join('/') || '/',
         },
         route.breadcrumbName
       )

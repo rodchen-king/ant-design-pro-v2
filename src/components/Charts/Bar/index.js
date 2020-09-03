@@ -1,22 +1,22 @@
-import React, { Component } from "react";
-import { Chart, Axis, Tooltip, Geom } from "bizcharts";
-import Debounce from "lodash-decorators/debounce";
-import Bind from "lodash-decorators/bind";
-import autoHeight from "../autoHeight";
-import styles from "../index.less";
+import React, { Component } from 'react';
+import { Chart, Axis, Tooltip, Geom } from 'bizcharts';
+import Debounce from 'lodash-decorators/debounce';
+import Bind from 'lodash-decorators/bind';
+import autoHeight from '../autoHeight';
+import styles from '../index.less';
 
 @autoHeight()
 class Bar extends Component {
   state = {
-    autoHideXLabels: false
+    autoHideXLabels: false,
   };
 
   componentDidMount() {
-    window.addEventListener("resize", this.resize, { passive: true });
+    window.addEventListener('resize', this.resize, { passive: true });
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.resize);
+    window.removeEventListener('resize', this.resize);
   }
 
   handleRoot = n => {
@@ -44,12 +44,12 @@ class Bar extends Component {
     if (canvasWidth <= minWidth) {
       if (!autoHideXLabels) {
         this.setState({
-          autoHideXLabels: true
+          autoHideXLabels: true,
         });
       }
     } else if (autoHideXLabels) {
       this.setState({
-        autoHideXLabels: false
+        autoHideXLabels: false,
       });
     }
   }
@@ -60,27 +60,27 @@ class Bar extends Component {
       title,
       forceFit = true,
       data,
-      color = "rgba(24, 144, 255, 0.85)",
-      padding
+      color = 'rgba(24, 144, 255, 0.85)',
+      padding,
     } = this.props;
 
     const { autoHideXLabels } = this.state;
 
     const scale = {
       x: {
-        type: "cat"
+        type: 'cat',
       },
       y: {
-        min: 0
-      }
+        min: 0,
+      },
     };
 
     const tooltip = [
-      "x*y",
+      'x*y',
       (x, y) => ({
         name: x,
-        value: y
-      })
+        value: y,
+      }),
     ];
 
     return (
@@ -92,7 +92,7 @@ class Bar extends Component {
             height={title ? height - 41 : height}
             forceFit={forceFit}
             data={data}
-            padding={padding || "auto"}
+            padding={padding || 'auto'}
           >
             <Axis
               name="x"
@@ -102,12 +102,7 @@ class Bar extends Component {
             />
             <Axis name="y" min={0} />
             <Tooltip showTitle={false} crosshairs={false} />
-            <Geom
-              type="interval"
-              position="x*y"
-              color={color}
-              tooltip={tooltip}
-            />
+            <Geom type="interval" position="x*y" color={color} tooltip={tooltip} />
           </Chart>
         </div>
       </div>

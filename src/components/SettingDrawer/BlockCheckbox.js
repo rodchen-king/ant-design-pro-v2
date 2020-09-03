@@ -1,6 +1,6 @@
-import React from "react";
-import { Tooltip, Icon } from "antd";
-import style from "./index.less";
+import React from 'react';
+import { Tooltip, Icon } from 'antd';
+import style from './index.less';
 
 const BlockChecbox = ({ value, onChange, list }) => (
   <div className={style.blockChecbox} key={value}>
@@ -11,7 +11,7 @@ const BlockChecbox = ({ value, onChange, list }) => (
           <div
             className={style.selectIcon}
             style={{
-              display: value === item.key ? "block" : "none"
+              display: value === item.key ? 'block' : 'none',
             }}
           >
             <Icon type="check" />

@@ -1,8 +1,8 @@
-import React, { PureComponent } from "react";
-import { Tabs, Skeleton } from "antd";
-import classNames from "classnames";
-import styles from "./index.less";
-import BreadcrumbView from "./breadcrumb";
+import React, { PureComponent } from 'react';
+import { Tabs, Skeleton } from 'antd';
+import classNames from 'classnames';
+import styles from './index.less';
+import BreadcrumbView from './breadcrumb';
 
 const { TabPane } = Tabs;
 export default class PageHeader extends PureComponent {
@@ -27,7 +27,7 @@ export default class PageHeader extends PureComponent {
       tabBarExtraContent,
       loading = false,
       wide = false,
-      hiddenBreadcrumb = false
+      hiddenBreadcrumb = false,
     } = this.props;
 
     const clsString = classNames(styles.pageHeader, className);
@@ -40,13 +40,13 @@ export default class PageHeader extends PureComponent {
     }
     return (
       <div className={clsString}>
-        <div className={wide ? styles.wide : ""}>
+        <div className={wide ? styles.wide : ''}>
           <Skeleton
             loading={loading}
             title={false}
             active
             paragraph={{ rows: 3 }}
-            avatar={{ size: "large", shape: "circle" }}
+            avatar={{ size: 'large', shape: 'circle' }}
           >
             {hiddenBreadcrumb ? null : <BreadcrumbView {...this.props} />}
             <div className={styles.detail}>
@@ -58,9 +58,7 @@ export default class PageHeader extends PureComponent {
                 </div>
                 <div className={styles.row}>
                   {content && <div className={styles.content}>{content}</div>}
-                  {extraContent && (
-                    <div className={styles.extraContent}>{extraContent}</div>
-                  )}
+                  {extraContent && <div className={styles.extraContent}>{extraContent}</div>}
                 </div>
               </div>
             </div>

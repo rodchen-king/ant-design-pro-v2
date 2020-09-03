@@ -1,6 +1,6 @@
-import React, { PureComponent } from "react";
-import autoHeight from "../autoHeight";
-import styles from "./index.less";
+import React, { PureComponent } from 'react';
+import autoHeight from '../autoHeight';
+import styles from './index.less';
 
 /* eslint no-return-assign: 0 */
 /* eslint no-mixed-operators: 0 */
@@ -9,14 +9,14 @@ import styles from "./index.less";
 @autoHeight()
 class WaterWave extends PureComponent {
   state = {
-    radio: 1
+    radio: 1,
   };
 
   componentDidMount() {
     this.renderChart();
     this.resize();
     window.addEventListener(
-      "resize",
+      'resize',
       () => {
         requestAnimationFrame(() => this.resize());
       },
@@ -28,16 +28,16 @@ class WaterWave extends PureComponent {
     const { percent } = this.props;
     if (props.percent !== percent) {
       // 不加这个会造成绘制缓慢
-      this.renderChart("update");
+      this.renderChart('update');
     }
   }
 
   componentWillUnmount() {
     cancelAnimationFrame(this.timer);
     if (this.node) {
-      this.node.innerHTML = "";
+      this.node.innerHTML = '';
     }
-    window.removeEventListener("resize", this.resize);
+    window.removeEventListener('resize', this.resize);
   }
 
   resize = () => {
@@ -45,13 +45,13 @@ class WaterWave extends PureComponent {
       const { height } = this.props;
       const { offsetWidth } = this.root.parentNode;
       this.setState({
-        radio: offsetWidth < height ? offsetWidth / height : 1
+        radio: offsetWidth < height ? offsetWidth / height : 1,
       });
     }
   };
 
   renderChart(type) {
-    const { percent, color = "#1890FF" } = this.props;
+    const { percent, color = '#1890FF' } = this.props;
     const data = percent / 100;
     const self = this;
     cancelAnimationFrame(this.timer);
@@ -61,7 +61,7 @@ class WaterWave extends PureComponent {
     }
 
     const canvas = this.node;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext('2d');
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
     const radius = canvasWidth / 2;
@@ -85,11 +85,7 @@ class WaterWave extends PureComponent {
     const circleOffset = -(Math.PI / 2);
     let circleLock = true;
 
-    for (
-      let i = circleOffset;
-      i < circleOffset + 2 * Math.PI;
-      i += 1 / (8 * Math.PI)
-    ) {
+    for (let i = circleOffset; i < circleOffset + 2 * Math.PI; i += 1 / (8 * Math.PI)) {
       arcStack.push([radius + bR * Math.cos(i), radius + bR * Math.sin(i)]);
     }
 
@@ -119,7 +115,7 @@ class WaterWave extends PureComponent {
       ctx.lineTo(startPoint[0], startPoint[1]);
 
       const gradient = ctx.createLinearGradient(0, 0, 0, canvasHeight);
-      gradient.addColorStop(0, "#ffffff");
+      gradient.addColorStop(0, '#ffffff');
       gradient.addColorStop(1, color);
       ctx.fillStyle = gradient;
       ctx.fill();
@@ -128,7 +124,7 @@ class WaterWave extends PureComponent {
 
     function render() {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-      if (circleLock && type !== "update") {
+      if (circleLock && type !== 'update') {
         if (arcStack.length) {
           const temp = arcStack.shift();
           ctx.lineTo(temp[0], temp[1]);
@@ -139,7 +135,7 @@ class WaterWave extends PureComponent {
           ctx.stroke();
           arcStack = null;
 
-          ctx.globalCompositeOperation = "destination-over";
+          ctx.globalCompositeOperation = 'destination-over';
           ctx.beginPath();
           ctx.lineWidth = lineWidth;
           ctx.arc(radius, radius, bR, 0, 2 * Math.PI, 1);
@@ -197,7 +193,7 @@ class WaterWave extends PureComponent {
         ref={n => (this.root = n)}
         style={{ transform: `scale(${radio})` }}
       >
-        <div style={{ width: height, height, overflow: "hidden" }}>
+        <div style={{ width: height, height, overflow: 'hidden' }}>
           <canvas
             className={styles.waterWaveCanvasWrapper}
             ref={n => (this.node = n)}

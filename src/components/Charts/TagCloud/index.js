@@ -1,22 +1,21 @@
-import React, { Component } from "react";
-import { Chart, Geom, Coord, Shape } from "bizcharts";
-import DataSet from "@antv/data-set";
-import Debounce from "lodash-decorators/debounce";
-import Bind from "lodash-decorators/bind";
-import classNames from "classnames";
-import autoHeight from "../autoHeight";
-import styles from "./index.less";
+import React, { Component } from 'react';
+import { Chart, Geom, Coord, Shape, Tooltip } from 'bizcharts';
+import DataSet from '@antv/data-set';
+import Debounce from 'lodash-decorators/debounce';
+import Bind from 'lodash-decorators/bind';
+import classNames from 'classnames';
+import autoHeight from '../autoHeight';
+import styles from './index.less';
 
 /* eslint no-underscore-dangle: 0 */
 /* eslint no-param-reassign: 0 */
 
-const imgUrl =
-  "https://gw.alipayobjects.com/zos/rmsportal/gWyeGLCdFFRavBGIDzWk.png";
+const imgUrl = 'https://gw.alipayobjects.com/zos/rmsportal/gWyeGLCdFFRavBGIDzWk.png';
 
 @autoHeight()
 class TagCloud extends Component {
   state = {
-    dv: null
+    dv: null,
   };
 
   componentDidMount() {
@@ -24,7 +23,7 @@ class TagCloud extends Component {
       this.initTagCloud();
       this.renderChart();
     });
-    window.addEventListener("resize", this.resize, { passive: true });
+    window.addEventListener('resize', this.resize, { passive: true });
   }
 
   componentDidUpdate(preProps) {
@@ -37,7 +36,7 @@ class TagCloud extends Component {
   componentWillUnmount() {
     this.isUnmount = true;
     window.cancelAnimationFrame(this.requestRef);
-    window.removeEventListener("resize", this.resize);
+    window.removeEventListener('resize', this.resize);
   }
 
   resize = () => {
@@ -59,26 +58,26 @@ class TagCloud extends Component {
           fontSize: cfg.origin._origin.size,
           rotate: cfg.origin._origin.rotate,
           text: cfg.origin._origin.text,
-          textAlign: "center",
+          textAlign: 'center',
           fontFamily: cfg.origin._origin.font,
           fill: cfg.color,
-          textBaseline: "Alphabetic"
+          textBaseline: 'Alphabetic',
         },
         cfg.style
       );
     }
 
     // 给point注册一个词云的shape
-    Shape.registerShape("point", "cloud", {
+    Shape.registerShape('point', 'cloud', {
       drawShape(cfg, container) {
         const attrs = getTextAttrs(cfg);
-        return container.addShape("text", {
+        return container.addShape('text', {
           attrs: Object.assign(attrs, {
             x: cfg.x,
-            y: cfg.y
-          })
+            y: cfg.y,
+          }),
         });
-      }
+      },
     });
   };
 
@@ -92,28 +91,28 @@ class TagCloud extends Component {
       return;
     }
 
-    const h = height * 4;
-    const w = this.root.offsetWidth * 4;
+    const h = height;
+    const w = this.root.offsetWidth;
 
     const onload = () => {
       const dv = new DataSet.View().source(data);
-      const range = dv.range("value");
+      const range = dv.range('value');
       const [min, max] = range;
       dv.transform({
-        type: "tag-cloud",
-        fields: ["name", "value"],
+        type: 'tag-cloud',
+        fields: ['name', 'value'],
         imageMask: this.imageMask,
-        font: "Verdana",
+        font: 'Verdana',
         size: [w, h], // 宽高设置最好根据 imageMask 做调整
-        padding: 5,
+        padding: 0,
         timeInterval: 5000, // max execute time
         rotate() {
           return 0;
         },
         fontSize(d) {
           // eslint-disable-next-line
-          return Math.pow((d.value - min) / (max - min), 2) * (70 - 20) + 20;
-        }
+          return Math.pow((d.value - min) / (max - min), 2) * (17.5 - 5) + 5;
+        },
       });
 
       if (this.isUnmount) {
@@ -123,13 +122,13 @@ class TagCloud extends Component {
       this.setState({
         dv,
         w,
-        h
+        h,
       });
     };
 
     if (!this.imageMask) {
       this.imageMask = new Image();
-      this.imageMask.crossOrigin = "";
+      this.imageMask.crossOrigin = '';
       this.imageMask.src = imgUrl;
 
       this.imageMask.onload = onload;
@@ -145,7 +144,7 @@ class TagCloud extends Component {
     return (
       <div
         className={classNames(styles.tagCloud, className)}
-        style={{ width: "100%", height }}
+        style={{ width: '100%', height }}
         ref={this.saveRootRef}
       >
         {dv && (
@@ -156,11 +155,23 @@ class TagCloud extends Component {
             padding={0}
             scale={{
               x: { nice: false },
-              y: { nice: false }
+              y: { nice: false },
             }}
           >
+            <Tooltip showTitle={false} />
             <Coord reflect="y" />
-            <Geom type="point" position="x*y" color="text" shape="cloud" />
+            <Geom
+              type="point"
+              position="x*y"
+              color="text"
+              shape="cloud"
+              tooltip={[
+                'text*value',
+                function trans(text, value) {
+                  return { name: text, value };
+                },
+              ]}
+            />
           </Chart>
         )}
       </div>

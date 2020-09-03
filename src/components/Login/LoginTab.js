@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { Tabs } from "antd";
-import LoginContext from "./loginContext";
+import React, { Component } from 'react';
+import { Tabs } from 'antd';
+import LoginContext from './loginContext';
 
 const { TabPane } = Tabs;
 
 const generateId = (() => {
   let i = 0;
-  return (prefix = "") => {
+  return (prefix = '') => {
     i += 1;
     return `${prefix}${i}`;
   };
@@ -15,7 +15,7 @@ const generateId = (() => {
 class LoginTab extends Component {
   constructor(props) {
     super(props);
-    this.uniqueId = generateId("login-tab-");
+    this.uniqueId = generateId('login-tab-');
   }
 
   componentDidMount() {
@@ -36,6 +36,6 @@ const wrapContext = props => (
 );
 
 // 标志位 用来判断是不是自定义组件
-wrapContext.typeName = "LoginTab";
+wrapContext.typeName = 'LoginTab';
 
 export default wrapContext;

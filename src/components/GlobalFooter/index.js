@@ -1,6 +1,6 @@
-import React from "react";
-import classNames from "classnames";
-import styles from "./index.less";
+import React from 'react';
+import classNames from 'classnames';
+import styles from './index.less';
 
 const GlobalFooter = ({ className, links, copyright }) => {
   const clsString = classNames(styles.globalFooter, className);
@@ -12,7 +12,7 @@ const GlobalFooter = ({ className, links, copyright }) => {
             <a
               key={link.key}
               title={link.key}
-              target={link.blankTarget ? "_blank" : "_self"}
+              target={link.blankTarget ? '_blank' : '_self'}
               href={link.href}
             >
               {link.title}

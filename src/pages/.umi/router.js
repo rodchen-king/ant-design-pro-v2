@@ -1,373 +1,387 @@
-import React from "react";
+import React from 'react';
 import {
   Router as DefaultRouter,
   Route,
   Switch,
-  StaticRouter
-} from "react-router-dom";
-import dynamic from "umi/dynamic";
-import renderRoutes from "umi/lib/renderRoutes";
-import history from "@@/history";
-import RendererWrapper0 from "/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/.umi/LocaleWrapper.jsx";
-import _dvaDynamic from "dva/dynamic";
+  StaticRouter,
+} from 'react-router-dom';
+import dynamic from 'umi/dynamic';
+import renderRoutes from 'umi/lib/renderRoutes';
+import history from '@@/history';
+import RendererWrapper0 from '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/.umi/LocaleWrapper.jsx';
+import _dvaDynamic from 'dva/dynamic';
 
-const Router = require("dva/router").routerRedux.ConnectedRouter;
+const Router = require('dva/router').routerRedux.ConnectedRouter;
 
 const routes = [
   {
-    path: "/user",
+    path: '/user',
     component: __IS_BROWSER
       ? _dvaDynamic({
-          component: () => import("../../layouts/UserLayout"),
-          LoadingComponent: require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index")
-            .default
+          component: () =>
+            import(/* webpackChunkName: "layouts__UserLayout" */ '../../layouts/UserLayout'),
+          LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+            .default,
         })
-      : require("../../layouts/UserLayout").default,
+      : require('../../layouts/UserLayout').default,
     routes: [
       {
-        path: "/user",
-        redirect: "/user/login",
-        exact: true
+        path: '/user',
+        redirect: '/user/login',
+        exact: true,
       },
       {
-        path: "/user/login",
+        path: '/user/login',
         component: __IS_BROWSER
           ? _dvaDynamic({
-              app: require("@tmp/dva").getApp(),
+              app: require('@tmp/dva').getApp(),
               models: () => [
-                import("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/User/models/register.js").then(
+                import(/* webpackChunkName: 'p__User__models__register.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/User/models/register.js').then(
                   m => {
-                    return { namespace: "register", ...m.default };
-                  }
-                )
+                    return { namespace: 'register', ...m.default };
+                  },
+                ),
               ],
-              component: () => import("../User/Login"),
-              LoadingComponent: require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index")
-                .default
+              component: () =>
+                import(/* webpackChunkName: "p__User__Login" */ '../User/Login'),
+              LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                .default,
             })
-          : require("../User/Login").default,
-        exact: true
+          : require('../User/Login').default,
+        exact: true,
       },
       {
-        path: "/user/register",
+        path: '/user/register',
         component: __IS_BROWSER
           ? _dvaDynamic({
-              app: require("@tmp/dva").getApp(),
+              app: require('@tmp/dva').getApp(),
               models: () => [
-                import("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/User/models/register.js").then(
+                import(/* webpackChunkName: 'p__User__models__register.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/User/models/register.js').then(
                   m => {
-                    return { namespace: "register", ...m.default };
-                  }
-                )
+                    return { namespace: 'register', ...m.default };
+                  },
+                ),
               ],
-              component: () => import("../User/Register"),
-              LoadingComponent: require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index")
-                .default
+              component: () =>
+                import(/* webpackChunkName: "p__User__Register" */ '../User/Register'),
+              LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                .default,
             })
-          : require("../User/Register").default,
-        exact: true
+          : require('../User/Register').default,
+        exact: true,
       },
       {
-        path: "/user/register-result",
+        path: '/user/register-result',
         component: __IS_BROWSER
           ? _dvaDynamic({
-              app: require("@tmp/dva").getApp(),
+              app: require('@tmp/dva').getApp(),
               models: () => [
-                import("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/User/models/register.js").then(
+                import(/* webpackChunkName: 'p__User__models__register.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/User/models/register.js').then(
                   m => {
-                    return { namespace: "register", ...m.default };
-                  }
-                )
+                    return { namespace: 'register', ...m.default };
+                  },
+                ),
               ],
-              component: () => import("../User/RegisterResult"),
-              LoadingComponent: require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index")
-                .default
+              component: () =>
+                import(/* webpackChunkName: "p__User__RegisterResult" */ '../User/RegisterResult'),
+              LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                .default,
             })
-          : require("../User/RegisterResult").default,
-        exact: true
+          : require('../User/RegisterResult').default,
+        exact: true,
       },
       {
         component: () =>
           React.createElement(
-            require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js")
+            require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
               .default,
-            { pagesPath: "src/pages", hasRoutesInConfig: true }
-          )
-      }
-    ]
+            { pagesPath: 'src/pages', hasRoutesInConfig: true },
+          ),
+      },
+    ],
   },
   {
-    path: "/",
+    path: '/',
     component: __IS_BROWSER
       ? _dvaDynamic({
-          component: () => import("../../layouts/BasicLayout"),
-          LoadingComponent: require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index")
-            .default
+          component: () =>
+            import(/* webpackChunkName: "layouts__BasicLayout" */ '../../layouts/BasicLayout'),
+          LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+            .default,
         })
-      : require("../../layouts/BasicLayout").default,
-    Routes: [require("../Authorized").default],
-    authority: ["admin", "user"],
+      : require('../../layouts/BasicLayout').default,
+    Routes: [require('../Authorized').default],
+    authority: ['admin', 'user'],
     routes: [
       {
-        path: "/",
-        redirect: "/list/table-list",
-        exact: true
+        path: '/',
+        redirect: '/list/table-list',
+        exact: true,
       },
       {
-        path: "/form",
-        icon: "form",
-        name: "form",
+        path: '/form',
+        icon: 'form',
+        name: 'form',
         routes: [
           {
-            path: "/form/basic-form",
-            name: "basicform",
+            path: '/form/basic-form',
+            name: 'basicform',
             component: __IS_BROWSER
               ? _dvaDynamic({
-                  app: require("@tmp/dva").getApp(),
+                  app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Forms/models/form.js").then(
+                    import(/* webpackChunkName: 'p__Forms__models__form.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Forms/models/form.js').then(
                       m => {
-                        return { namespace: "form", ...m.default };
-                      }
-                    )
+                        return { namespace: 'form', ...m.default };
+                      },
+                    ),
                   ],
-                  component: () => import("../Forms/BasicForm"),
-                  LoadingComponent: require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index")
-                    .default
+                  component: () =>
+                    import(/* webpackChunkName: "layouts__BasicLayout" */ '../Forms/BasicForm'),
+                  LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                    .default,
                 })
-              : require("../Forms/BasicForm").default,
-            exact: true
+              : require('../Forms/BasicForm').default,
+            exact: true,
           },
           {
             component: () =>
               React.createElement(
-                require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js")
+                require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
                   .default,
-                { pagesPath: "src/pages", hasRoutesInConfig: true }
-              )
-          }
-        ]
+                { pagesPath: 'src/pages', hasRoutesInConfig: true },
+              ),
+          },
+        ],
       },
       {
-        path: "/list",
-        icon: "table",
-        name: "list",
+        path: '/list',
+        icon: 'table',
+        name: 'list',
         routes: [
           {
-            path: "/list/table-list",
-            name: "searchtable",
+            path: '/list/table-list',
+            name: 'searchtable',
             component: __IS_BROWSER
               ? _dvaDynamic({
-                  app: require("@tmp/dva").getApp(),
+                  app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/List/models/rule.js").then(
+                    import(/* webpackChunkName: 'p__List__models__rule.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/List/models/rule.js').then(
                       m => {
-                        return { namespace: "rule", ...m.default };
-                      }
-                    )
+                        return { namespace: 'rule', ...m.default };
+                      },
+                    ),
                   ],
-                  component: () => import("../List/TableList"),
-                  LoadingComponent: require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index")
-                    .default
+                  component: () =>
+                    import(/* webpackChunkName: "layouts__BasicLayout" */ '../List/TableList'),
+                  LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                    .default,
                 })
-              : require("../List/TableList").default,
-            exact: true
+              : require('../List/TableList').default,
+            exact: true,
           },
           {
             component: () =>
               React.createElement(
-                require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js")
+                require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
                   .default,
-                { pagesPath: "src/pages", hasRoutesInConfig: true }
-              )
-          }
-        ]
+                { pagesPath: 'src/pages', hasRoutesInConfig: true },
+              ),
+          },
+        ],
       },
       {
-        path: "/profile",
-        name: "profile",
-        icon: "profile",
+        path: '/profile',
+        name: 'profile',
+        icon: 'profile',
         routes: [
           {
-            path: "/profile/basic",
-            name: "basic",
+            path: '/profile/basic',
+            name: 'basic',
             component: __IS_BROWSER
               ? _dvaDynamic({
-                  app: require("@tmp/dva").getApp(),
+                  app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Profile/models/profile.js").then(
+                    import(/* webpackChunkName: 'p__Profile__models__profile.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Profile/models/profile.js').then(
                       m => {
-                        return { namespace: "profile", ...m.default };
-                      }
-                    )
+                        return { namespace: 'profile', ...m.default };
+                      },
+                    ),
                   ],
-                  component: () => import("../Profile/BasicProfile"),
-                  LoadingComponent: require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index")
-                    .default
+                  component: () =>
+                    import(/* webpackChunkName: "layouts__BasicLayout" */ '../Profile/BasicProfile'),
+                  LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                    .default,
                 })
-              : require("../Profile/BasicProfile").default,
-            exact: true
+              : require('../Profile/BasicProfile').default,
+            exact: true,
           },
           {
-            path: "/profile/advanced",
-            name: "advanced",
-            authority: ["admin"],
+            path: '/profile/advanced',
+            name: 'advanced',
+            authority: ['admin'],
             component: __IS_BROWSER
               ? _dvaDynamic({
-                  app: require("@tmp/dva").getApp(),
+                  app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Profile/models/profile.js").then(
+                    import(/* webpackChunkName: 'p__Profile__models__profile.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Profile/models/profile.js').then(
                       m => {
-                        return { namespace: "profile", ...m.default };
-                      }
-                    )
+                        return { namespace: 'profile', ...m.default };
+                      },
+                    ),
                   ],
-                  component: () => import("../Profile/AdvancedProfile"),
-                  LoadingComponent: require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index")
-                    .default
+                  component: () =>
+                    import(/* webpackChunkName: "layouts__BasicLayout" */ '../Profile/AdvancedProfile'),
+                  LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                    .default,
                 })
-              : require("../Profile/AdvancedProfile").default,
-            exact: true
+              : require('../Profile/AdvancedProfile').default,
+            exact: true,
           },
           {
             component: () =>
               React.createElement(
-                require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js")
+                require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
                   .default,
-                { pagesPath: "src/pages", hasRoutesInConfig: true }
-              )
-          }
-        ]
+                { pagesPath: 'src/pages', hasRoutesInConfig: true },
+              ),
+          },
+        ],
       },
       {
-        name: "exception",
-        icon: "warning",
+        name: 'exception',
+        icon: 'warning',
         hideInMenu: true,
-        path: "/exception",
+        path: '/exception',
         routes: [
           {
-            path: "/exception/403",
-            name: "not-permission",
+            path: '/exception/403',
+            name: 'not-permission',
             component: __IS_BROWSER
               ? _dvaDynamic({
-                  app: require("@tmp/dva").getApp(),
+                  app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Exception/models/error.js").then(
+                    import(/* webpackChunkName: 'p__Exception__models__error.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Exception/models/error.js').then(
                       m => {
-                        return { namespace: "error", ...m.default };
-                      }
-                    )
+                        return { namespace: 'error', ...m.default };
+                      },
+                    ),
                   ],
-                  component: () => import("../Exception/403"),
-                  LoadingComponent: require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index")
-                    .default
+                  component: () =>
+                    import(/* webpackChunkName: "layouts__BasicLayout" */ '../Exception/403'),
+                  LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                    .default,
                 })
-              : require("../Exception/403").default,
-            exact: true
+              : require('../Exception/403').default,
+            exact: true,
           },
           {
-            path: "/exception/404",
-            name: "not-find",
+            path: '/exception/404',
+            name: 'not-find',
             component: __IS_BROWSER
               ? _dvaDynamic({
-                  app: require("@tmp/dva").getApp(),
+                  app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Exception/models/error.js").then(
+                    import(/* webpackChunkName: 'p__Exception__models__error.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Exception/models/error.js').then(
                       m => {
-                        return { namespace: "error", ...m.default };
-                      }
-                    )
+                        return { namespace: 'error', ...m.default };
+                      },
+                    ),
                   ],
-                  component: () => import("../Exception/404"),
-                  LoadingComponent: require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index")
-                    .default
+                  component: () =>
+                    import(/* webpackChunkName: "layouts__BasicLayout" */ '../Exception/404'),
+                  LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                    .default,
                 })
-              : require("../Exception/404").default,
-            exact: true
+              : require('../Exception/404').default,
+            exact: true,
           },
           {
-            path: "/exception/500",
-            name: "server-error",
+            path: '/exception/500',
+            name: 'server-error',
             component: __IS_BROWSER
               ? _dvaDynamic({
-                  app: require("@tmp/dva").getApp(),
+                  app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Exception/models/error.js").then(
+                    import(/* webpackChunkName: 'p__Exception__models__error.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Exception/models/error.js').then(
                       m => {
-                        return { namespace: "error", ...m.default };
-                      }
-                    )
+                        return { namespace: 'error', ...m.default };
+                      },
+                    ),
                   ],
-                  component: () => import("../Exception/500"),
-                  LoadingComponent: require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index")
-                    .default
+                  component: () =>
+                    import(/* webpackChunkName: "layouts__BasicLayout" */ '../Exception/500'),
+                  LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                    .default,
                 })
-              : require("../Exception/500").default,
-            exact: true
+              : require('../Exception/500').default,
+            exact: true,
           },
           {
-            path: "/exception/trigger",
-            name: "trigger",
+            path: '/exception/trigger',
+            name: 'trigger',
             hideInMenu: true,
             component: __IS_BROWSER
               ? _dvaDynamic({
-                  app: require("@tmp/dva").getApp(),
+                  app: require('@tmp/dva').getApp(),
                   models: () => [
-                    import("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Exception/models/error.js").then(
+                    import(/* webpackChunkName: 'p__Exception__models__error.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Exception/models/error.js').then(
                       m => {
-                        return { namespace: "error", ...m.default };
-                      }
-                    )
+                        return { namespace: 'error', ...m.default };
+                      },
+                    ),
                   ],
-                  component: () => import("../Exception/TriggerException"),
-                  LoadingComponent: require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index")
-                    .default
+                  component: () =>
+                    import(/* webpackChunkName: "layouts__BasicLayout" */ '../Exception/TriggerException'),
+                  LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                    .default,
                 })
-              : require("../Exception/TriggerException").default,
-            exact: true
+              : require('../Exception/TriggerException').default,
+            exact: true,
           },
           {
             component: () =>
               React.createElement(
-                require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js")
+                require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
                   .default,
-                { pagesPath: "src/pages", hasRoutesInConfig: true }
-              )
-          }
-        ]
+                { pagesPath: 'src/pages', hasRoutesInConfig: true },
+              ),
+          },
+        ],
       },
       {
         component: __IS_BROWSER
           ? _dvaDynamic({
-              component: () => import("../404"),
-              LoadingComponent: require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index")
-                .default
+              component: () =>
+                import(/* webpackChunkName: "p__404" */ '../404'),
+              LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                .default,
             })
-          : require("../404").default,
-        exact: true
+          : require('../404').default,
+        exact: true,
       },
       {
         component: () =>
           React.createElement(
-            require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js")
+            require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
               .default,
-            { pagesPath: "src/pages", hasRoutesInConfig: true }
-          )
-      }
-    ]
+            { pagesPath: 'src/pages', hasRoutesInConfig: true },
+          ),
+      },
+    ],
   },
   {
     component: () =>
       React.createElement(
-        require("/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js")
+        require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
           .default,
-        { pagesPath: "src/pages", hasRoutesInConfig: true }
-      )
-  }
+        { pagesPath: 'src/pages', hasRoutesInConfig: true },
+      ),
+  },
 ];
 window.g_routes = routes;
-const plugins = require("umi/_runtimePlugin");
-plugins.applyForEach("patchRoutes", { initialValue: routes });
+const plugins = require('umi/_runtimePlugin');
+plugins.applyForEach('patchRoutes', { initialValue: routes });
 
 export { routes };
 
@@ -379,12 +393,12 @@ export default class RouterWrapper extends React.Component {
 
     // route change handler
     function routeChangeHandler(location, action) {
-      plugins.applyForEach("onRouteChange", {
+      plugins.applyForEach('onRouteChange', {
         initialValue: {
           routes,
           location,
-          action
-        }
+          action,
+        },
       });
     }
     this.unListen = history.listen(routeChangeHandler);
@@ -393,7 +407,7 @@ export default class RouterWrapper extends React.Component {
     const isDva =
       history.listen
         .toString()
-        .indexOf("callback(history.location, history.action)") > -1;
+        .indexOf('callback(history.location, history.action)') > -1;
     if (!isDva) {
       routeChangeHandler(history.location);
     }

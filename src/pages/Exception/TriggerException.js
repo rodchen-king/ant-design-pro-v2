@@ -1,26 +1,26 @@
-import React, { PureComponent } from "react";
-import { Button, Spin, Card } from "antd";
-import { connect } from "dva";
-import styles from "./style.less";
+import React, { PureComponent } from 'react';
+import { Button, Spin, Card } from 'antd';
+import { connect } from 'dva';
+import styles from './style.less';
 
 @connect(state => ({
-  isloading: state.error.isloading
+  isloading: state.error.isloading,
 }))
 class TriggerException extends PureComponent {
   state = {
-    isloading: false
+    isloading: false,
   };
 
   triggerError = code => {
     this.setState({
-      isloading: true
+      isloading: true,
     });
     const { dispatch } = this.props;
     dispatch({
-      type: "error/query",
+      type: 'error/query',
       payload: {
-        code
-      }
+        code,
+      },
     });
   };
 

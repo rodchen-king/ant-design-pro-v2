@@ -1,5 +1,5 @@
 /* eslint eqeqeq: 0 */
-import React from "react";
+import React from 'react';
 
 function computeHeight(node) {
   const totalHeight = parseInt(getComputedStyle(node).height, 10);
@@ -33,7 +33,7 @@ function getAutoHeight(n) {
 const autoHeight = () => WrappedComponent =>
   class extends React.Component {
     state = {
-      computedHeight: 0
+      computedHeight: 0,
     };
 
     componentDidMount() {
@@ -54,9 +54,7 @@ const autoHeight = () => WrappedComponent =>
       const { computedHeight } = this.state;
       const h = height || computedHeight;
       return (
-        <div ref={this.handleRoot}>
-          {h > 0 && <WrappedComponent {...this.props} height={h} />}
-        </div>
+        <div ref={this.handleRoot}>{h > 0 && <WrappedComponent {...this.props} height={h} />}</div>
       );
     }
   };

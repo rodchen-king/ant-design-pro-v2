@@ -1,26 +1,26 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { Form, Tabs } from "antd";
-import classNames from "classnames";
-import LoginItem from "./LoginItem";
-import LoginTab from "./LoginTab";
-import LoginSubmit from "./LoginSubmit";
-import styles from "./index.less";
-import LoginContext from "./loginContext";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Form, Tabs } from 'antd';
+import classNames from 'classnames';
+import LoginItem from './LoginItem';
+import LoginTab from './LoginTab';
+import LoginSubmit from './LoginSubmit';
+import styles from './index.less';
+import LoginContext from './loginContext';
 
 class Login extends Component {
   static propTypes = {
     className: PropTypes.string,
     defaultActiveKey: PropTypes.string,
     onTabChange: PropTypes.func,
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
   };
 
   static defaultProps = {
-    className: "",
-    defaultActiveKey: "",
+    className: '',
+    defaultActiveKey: '',
     onTabChange: () => {},
-    onSubmit: () => {}
+    onSubmit: () => {},
   };
 
   constructor(props) {
@@ -28,13 +28,13 @@ class Login extends Component {
     this.state = {
       type: props.defaultActiveKey,
       tabs: [],
-      active: {}
+      active: {},
     };
   }
 
   onSwitch = type => {
     this.setState({
-      type
+      type,
     });
     const { onTabChange } = this.props;
     onTabChange(type);
@@ -47,14 +47,14 @@ class Login extends Component {
       tabUtil: {
         addTab: id => {
           this.setState({
-            tabs: [...tabs, id]
+            tabs: [...tabs, id],
           });
         },
         removeTab: id => {
           this.setState({
-            tabs: tabs.filter(currentId => currentId !== id)
+            tabs: tabs.filter(currentId => currentId !== id),
           });
-        }
+        },
       },
       form,
       updateActive: activeItem => {
@@ -65,9 +65,9 @@ class Login extends Component {
           active[type] = [activeItem];
         }
         this.setState({
-          active
+          active,
         });
-      }
+      },
     };
   };
 
@@ -91,7 +91,7 @@ class Login extends Component {
         return;
       }
       // eslint-disable-next-line
-      if (item.type.typeName === "LoginTab") {
+      if (item.type.typeName === 'LoginTab') {
         TabChildren.push(item);
       } else {
         otherChildren.push(item);
@@ -114,7 +114,7 @@ class Login extends Component {
                 {otherChildren}
               </React.Fragment>
             ) : (
-              [...children]
+              children
             )}
           </Form>
         </div>

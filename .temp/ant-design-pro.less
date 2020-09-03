@@ -1,4 +1,10 @@
-@import "../node_modules/antd/lib/style/themes/default.less";
+@import "~antd/lib/style/themes/default.less";
+
+@import "~antd/lib/style/themes/default.less";
+
+/* 
+  Convert to from  src/components/ActiveChart/index.less
+ */
 .antd-pro-components-active-chart-index-activeChart {
   position: relative;
 }
@@ -30,8 +36,30 @@
     text-align: right;
   }
 }
+.antd-pro-components-active-chart-index-dashedLine {
+  position: relative;
+  height: 1px;
+  top: -70px;
+  left: -3px;
 
-@import "~antd/lib/style/themes/default.less";
+  .antd-pro-components-active-chart-index-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right, transparent 50%, #e9e9e9 50%);
+    background-size: 6px;
+  }
+}
+
+.antd-pro-components-active-chart-index-dashedLine:last-child {
+  top: -36px;
+}
+
+/* 
+  Convert to from  src/components/ArticleListContent/index.less
+ */
 
 .antd-pro-components-article-list-content-index-listContent {
   .antd-pro-components-article-list-content-index-description {
@@ -42,7 +70,7 @@
     color: @text-color-secondary;
     margin-top: 16px;
     line-height: 22px;
-    .ant-avatar {
+    & > :global(.ant-avatar) {
       vertical-align: top;
       margin-right: 8px;
       width: 20px;
@@ -70,7 +98,9 @@
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/components/AvatarList/index.less
+ */
 
 .antd-pro-components-avatar-list-index-avatarList {
   display: inline-block;
@@ -109,11 +139,17 @@
     width: 20px;
     height: 20px;
     line-height: 20px;
+
+    .ant-avatar-string {
+      font-size: 12px;
+      line-height: 18px;
+    }
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
-
+/* 
+  Convert to from  src/components/Charts/ChartCard/index.less
+ */
 .antd-pro-components-charts-chart-card-index-chartCard {
   position: relative;
   .antd-pro-components-charts-chart-card-index-chartTop {
@@ -148,8 +184,9 @@
   .antd-pro-components-charts-chart-card-index-action {
     cursor: pointer;
     position: absolute;
-    top: 0;
+    top: 4px;
     right: 0;
+    line-height: 1;
   }
   .antd-pro-components-charts-chart-card-index-total {
     overflow: hidden;
@@ -187,23 +224,28 @@
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
-
+/* 
+  Convert to from  src/components/Charts/Field/index.less
+ */
 .antd-pro-components-charts-field-index-field {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 0;
-  span {
+  .antd-pro-components-charts-field-index-label,
+  .antd-pro-components-charts-field-index-number {
     font-size: @font-size-base;
     line-height: 22px;
   }
-  span:last-child {
-    margin-left: 8px;
+  .antd-pro-components-charts-field-index-number {
     color: @heading-color;
+    margin-left: 8px;
   }
 }
 
+/* 
+  Convert to from  src/components/Charts/index.less
+ */
 .antd-pro-components-charts-index-miniChart {
   position: relative;
   width: 100%;
@@ -224,8 +266,9 @@
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
-
+/* 
+  Convert to from  src/components/Charts/MiniProgress/index.less
+ */
 .antd-pro-components-charts-mini-progress-index-miniProgress {
   padding: 5px 0;
   position: relative;
@@ -260,7 +303,9 @@
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/components/Charts/Pie/index.less
+ */
 
 .antd-pro-components-charts-pie-index-pie {
   position: relative;
@@ -357,8 +402,9 @@
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
-
+/* 
+  Convert to from  src/components/Charts/Radar/index.less
+ */
 .antd-pro-components-charts-radar-index-radar {
   .antd-pro-components-charts-radar-index-legend {
     margin-top: 16px;
@@ -404,20 +450,26 @@
   }
 }
 
+/* 
+  Convert to from  src/components/Charts/TagCloud/index.less
+ */
 .antd-pro-components-charts-tag-cloud-index-tagCloud {
   overflow: hidden;
   canvas {
-    transform: scale(0.25);
     transform-origin: 0 0;
   }
 }
 
+/* 
+  Convert to from  src/components/Charts/TimelineChart/index.less
+ */
 .antd-pro-components-charts-timeline-chart-index-timelineChart {
   background: #fff;
 }
 
-@import "~antd/lib/style/themes/default.less";
-
+/* 
+  Convert to from  src/components/Charts/WaterWave/index.less
+ */
 .antd-pro-components-charts-water-wave-index-waterWave {
   display: inline-block;
   position: relative;
@@ -445,8 +497,9 @@
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
-
+/* 
+  Convert to from  src/components/DescriptionList/index.less
+*/
 .antd-pro-components-description-list-index-descriptionList {
   // offset the padding-bottom of last row
   .ant-row {
@@ -519,7 +572,9 @@
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/components/EditableItem/index.less
+ */
 
 .antd-pro-components-editable-item-index-editableItem {
   line-height: @input-height-base;
@@ -545,8 +600,9 @@
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
-
+/* 
+  Convert to from  src/components/EditableLinkGroup/index.less
+ */
 .antd-pro-components-editable-link-group-index-linkGroup {
   padding: 20px 0 8px 24px;
   font-size: 0;
@@ -561,6 +617,10 @@
     }
   }
 }
+
+/* 
+  Convert to from  src/components/Ellipsis/index.less
+ */
 
 .antd-pro-components-ellipsis-index-ellipsis {
   overflow: hidden;
@@ -587,7 +647,9 @@
   display: -webkit-box;
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/components/Exception/index.less
+ */
 
 .antd-pro-components-exception-index-exception {
   display: flex;
@@ -677,7 +739,9 @@
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/components/FooterToolbar/index.less
+ */
 
 .antd-pro-components-footer-toolbar-index-toolbar {
   position: fixed;
@@ -711,7 +775,9 @@
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/components/GlobalFooter/index.less
+ */
 
 .antd-pro-components-global-footer-index-globalFooter {
   padding: 0 16px;
@@ -741,12 +807,14 @@
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/components/GlobalHeader/index.less
+ */
 
 @pro-header-hover-bg: rgba(0, 0, 0, 0.025);
 
 .antd-pro-components-global-header-index-header {
-  height: 64px;
+  height: @layout-header-height;
   padding: 0;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
@@ -754,8 +822,8 @@
 }
 
 .antd-pro-components-global-header-index-logo {
-  height: 64px;
-  line-height: 58px;
+  height: @layout-header-height;
+  line-height: @layout-header-height;
   vertical-align: top;
   display: inline-block;
   padding: 0 0 0 24px;
@@ -768,20 +836,20 @@
 }
 
 .antd-pro-components-global-header-index-menu {
-  .anticon {
+  :global(.anticon) {
     margin-right: 8px;
   }
-  .ant-dropdown-menu-item {
-    width: 160px;
+  :global(.ant-dropdown-menu-item) {
+    min-width: 160px;
   }
 }
 
-i.antd-pro-components-global-header-index-trigger {
+.antd-pro-components-global-header-index-trigger {
   font-size: 20px;
-  height: 64px;
+  height: @layout-header-height;
   cursor: pointer;
   transition: all 0.3s, padding 0s;
-  padding: 22px 24px;
+  padding: ~"calc((@{layout-header-height} - 20px) / 2)" 24px;
   &:hover {
     background: @pro-header-hover-bg;
   }
@@ -804,7 +872,7 @@ i.antd-pro-components-global-header-index-trigger {
     &:hover {
       background: @pro-header-hover-bg;
     }
-    &.ant-popover-open {
+    &:global(.opened) {
       background: @pro-header-hover-bg;
     }
   }
@@ -816,7 +884,8 @@ i.antd-pro-components-global-header-index-trigger {
   }
   .antd-pro-components-global-header-index-account {
     .antd-pro-components-global-header-index-avatar {
-      margin: 20px 8px 20px 0;
+      margin: ~"calc((@{layout-header-height} - 24px) / 2)" 0;
+      margin-right: 8px;
       color: @primary-color;
       background: rgba(255, 255, 255, 0.85);
       vertical-align: top;
@@ -825,16 +894,17 @@ i.antd-pro-components-global-header-index-trigger {
 }
 
 .antd-pro-components-global-header-index-dark {
-  height: 64px;
+  height: @layout-header-height;
   .antd-pro-components-global-header-index-action {
     color: rgba(255, 255, 255, 0.85);
     > i {
       color: rgba(255, 255, 255, 0.85);
     }
-    .ant-popover-open {
+    &:hover,
+    &:global(.opened) {
       background: @primary-color;
     }
-    .ant-badge {
+    :global(.ant-badge) {
       color: rgba(255, 255, 255, 0.85);
     }
   }
@@ -842,7 +912,7 @@ i.antd-pro-components-global-header-index-trigger {
 
 @media only screen and (max-width: @screen-md) {
   .antd-pro-components-global-header-index-header {
-    .ant-divider-vertical {
+    :global(.ant-divider-vertical) {
       vertical-align: unset;
     }
     .antd-pro-components-global-header-index-name {
@@ -870,10 +940,30 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/components/HeaderDropdown/index.less
+ */
 
+.antd-pro-components-header-dropdown-index-container > * {
+  background-color: #fff;
+  box-shadow: @shadow-1-down;
+  border-radius: 4px;
+}
+
+@media screen and (max-width: @screen-xs) {
+  .antd-pro-components-header-dropdown-index-container {
+    width: 100% !important;
+  }
+  .antd-pro-components-header-dropdown-index-container > * {
+    border-radius: 0 !important;
+  }
+}
+
+/* 
+  Convert to from  src/components/HeaderSearch/index.less
+ */
 .antd-pro-components-header-search-index-headerSearch {
-  .anticon-search {
+  :global(.anticon-search) {
     cursor: pointer;
     font-size: 16px;
   }
@@ -882,7 +972,7 @@ i.antd-pro-components-global-header-index-trigger {
     width: 0;
     background: transparent;
     border-radius: 0;
-    .ant-select-selection {
+    :global(.ant-select-selection) {
       background: transparent;
     }
     input {
@@ -903,8 +993,9 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
-
+/* 
+  Convert to from  src/components/Login/index.less
+ */
 .antd-pro-components-login-index-login {
   .ant-tabs .ant-tabs-bar {
     border-bottom: 0;
@@ -912,8 +1003,13 @@ i.antd-pro-components-global-header-index-trigger {
     text-align: center;
   }
 
-  .antd-pro-components-login-index-ant-form-item {
+  .ant-form-item {
     margin: 0 2px 24px;
+  }
+
+  .antd-pro-components-login-index-getCaptcha {
+    display: block;
+    width: 100%;
   }
 
   .antd-pro-components-login-index-icon {
@@ -944,19 +1040,18 @@ i.antd-pro-components-global-header-index-trigger {
     color: @disabled-color;
   }
 
-  .submit {
+  .antd-pro-components-login-index-submit {
     width: 100%;
     margin-top: 24px;
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/components/NoticeIcon/index.less
+ */
 
 .antd-pro-components-notice-icon-index-popover {
   width: 336px;
-  .ant-popover-inner-content {
-    padding: 0;
-  }
 }
 
 .antd-pro-components-notice-icon-index-noticeButton {
@@ -974,15 +1069,20 @@ i.antd-pro-components-global-header-index-trigger {
     text-align: center;
   }
   .ant-tabs-bar {
-    margin-bottom: 4px;
+    margin-bottom: 0;
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/components/NoticeIcon/NoticeList.less
+ */
 
 .antd-pro-components-notice-icon-notice-list-list {
   max-height: 400px;
   overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   .antd-pro-components-notice-icon-notice-list-item {
     transition: all 0.3s;
     overflow: hidden;
@@ -1032,6 +1132,16 @@ i.antd-pro-components-global-header-index-trigger {
       margin-top: -1.5px;
     }
   }
+  .antd-pro-components-notice-icon-notice-list-loadMore {
+    padding: 8px 0;
+    cursor: pointer;
+    color: @primary-6;
+    text-align: center;
+    &.antd-pro-components-notice-icon-notice-list-loadedAll {
+      cursor: unset;
+      color: rgba(0, 0, 0, 0.25);
+    }
+  }
 }
 
 .antd-pro-components-notice-icon-notice-list-notFound {
@@ -1060,8 +1170,9 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
-
+/* 
+  Convert to from  src/components/NumberInfo/index.less
+ */
 .antd-pro-components-number-info-index-numberInfo {
   .antd-pro-components-number-info-index-suffix {
     color: @text-color;
@@ -1127,7 +1238,9 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/components/PageHeader/index.less
+*/
 
 .antd-pro-components-page-header-index-pageHeader {
   background: @component-background;
@@ -1281,6 +1394,9 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
+/* 
+  Convert to from  src/components/PageHeaderWrapper/GridContent.less
+ */
 .antd-pro-components-page-header-wrapper-grid-content-main {
   width: 100%;
   height: 100%;
@@ -1292,7 +1408,9 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/components/PageHeaderWrapper/index.less
+ */
 
 .antd-pro-components-page-header-wrapper-index-content {
   margin: 24px 24px 0;
@@ -1304,8 +1422,9 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
-
+/* 
+  Convert to from  src/components/Result/index.less
+ */
 .antd-pro-components-result-index-result {
   text-align: center;
   width: 72%;
@@ -1363,29 +1482,36 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/components/SelectLang/index.less
+ */
 
 .antd-pro-components-select-lang-index-menu {
-  .anticon {
+  :global(.anticon) {
     margin-right: 8px;
   }
-  .ant-dropdown-menu-item {
-    width: 160px;
+  :global(.ant-dropdown-menu-item) {
+    min-width: 160px;
   }
 }
 
 .antd-pro-components-select-lang-index-dropDown {
   cursor: pointer;
-  font-size: 14px;
   vertical-align: top;
-  line-height: 64px;
-  > svg {
-    position: relative;
-    top: 2px;
+  line-height: @layout-header-height;
+  > i {
+    font-size: 14px !important;
+    transform: none !important;
+    svg {
+      position: relative;
+      top: -1px;
+    }
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/components/SettingDrawer/index.less
+*/
 
 .antd-pro-components-setting-drawer-index-content {
   min-height: 100%;
@@ -1460,6 +1586,9 @@ i.antd-pro-components-global-header-index-trigger {
   margin-top: 16px;
 }
 
+/* 
+  Convert to from  src/components/SettingDrawer/ThemeColor.less
+ */
 .antd-pro-components-setting-drawer-theme-color-themeColor {
   overflow: hidden;
   margin-top: 24px;
@@ -1482,9 +1611,11 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/components/SiderMenu/index.less
+ */
 
-@nav-header-height: 64px;
+@nav-header-height: @layout-header-height;
 
 .antd-pro-components-sider-menu-index-logo {
   height: @nav-header-height;
@@ -1505,7 +1636,7 @@ i.antd-pro-components-global-header-index-trigger {
     vertical-align: middle;
     font-size: 20px;
     margin: 0 0 0 12px;
-    font-family: "Myriad Pro", "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-family: Avenir, "Helvetica Neue", Arial, Helvetica, sans-serif;
     font-weight: 600;
   }
 }
@@ -1519,7 +1650,7 @@ i.antd-pro-components-global-header-index-trigger {
     position: fixed;
     top: 0;
     left: 0;
-    .ant-menu-root {
+    :global(.ant-menu-root) {
       overflow-y: auto;
       height: ~"calc(100vh - @{nav-header-height})";
     }
@@ -1534,7 +1665,7 @@ i.antd-pro-components-global-header-index-trigger {
         color: @primary-color;
       }
     }
-    .ant-menu-light {
+    :global(.ant-menu-light) {
       border-right-color: transparent;
     }
   }
@@ -1544,13 +1675,16 @@ i.antd-pro-components-global-header-index-trigger {
   width: 14px;
   margin-right: 10px;
 }
+
 .top-nav-menu li.ant-menu-item {
   height: @nav-header-height;
   line-height: @nav-header-height;
 }
+
 .drawer .drawer-content {
   background: #001529;
 }
+
 .ant-menu-inline-collapsed {
   & > .ant-menu-item .sider-menu-item-img + span,
   &
@@ -1565,13 +1699,22 @@ i.antd-pro-components-global-header-index-trigger {
     opacity: 0;
   }
 }
+
 .ant-menu-item .sider-menu-item-img + span,
 .ant-menu-submenu-title .sider-menu-item-img + span {
   transition: opacity 0.3s @ease-in-out, width 0.3s @ease-in-out;
   opacity: 1;
 }
 
-@import "~antd/lib/style/themes/default.less";
+.ant-drawer-left {
+  .ant-drawer-body {
+    padding: 0;
+  }
+}
+
+/* 
+  Convert to from  src/components/StandardFormRow/index.less
+ */
 
 .antd-pro-components-standard-form-row-index-standardFormRow {
   border-bottom: 1px dashed @border-color-split;
@@ -1581,16 +1724,16 @@ i.antd-pro-components-global-header-index-trigger {
   .ant-form-item {
     margin-right: 24px;
   }
-  .antd-pro-components-standard-form-row-index-ant-form-item-label label {
+  .ant-form-item-label label {
     color: @text-color;
     margin-right: 0;
   }
-  .antd-pro-components-standard-form-row-index-ant-form-item-label,
-  .antd-pro-components-standard-form-row-index-ant-form-item-control {
+  .ant-form-item-label,
+  .ant-form-item-control {
     padding: 0;
     line-height: 32px;
   }
-  .label {
+  .antd-pro-components-standard-form-row-index-label {
     color: @heading-color;
     font-size: @font-size-base;
     margin-right: 24px;
@@ -1605,12 +1748,10 @@ i.antd-pro-components-global-header-index-trigger {
       }
     }
   }
-  .content {
+  .antd-pro-components-standard-form-row-index-content {
     flex: 1 1 0;
-    :global {
-      .ant-form-item:last-child {
-        margin-right: 0;
-      }
+    .ant-form-item:last-child {
+      margin-right: 0;
     }
   }
 }
@@ -1638,8 +1779,9 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
-
+/* 
+  Convert to from  src/components/StandardTable/index.less
+ */
 .antd-pro-components-standard-table-index-standardTable {
   .ant-table-pagination {
     margin-top: 24px;
@@ -1650,8 +1792,9 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
-
+/* 
+  Convert to from  src/components/TagSelect/index.less
+ */
 .antd-pro-components-tag-select-index-tagSelect {
   user-select: none;
   margin-left: -8px;
@@ -1682,14 +1825,18 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
+/* 
+  Convert to from  src/components/TopNavHeader/index.less
+ */
+
 .antd-pro-components-top-nav-header-index-head {
   width: 100%;
   transition: background 0.3s, width 0.2s;
-  height: 64px;
+  height: @layout-header-height;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   position: relative;
   .ant-menu-submenu.ant-menu-submenu-horizontal {
-    line-height: 64px;
+    line-height: @layout-header-height;
     height: 100%;
     .ant-menu-submenu-title {
       height: 100%;
@@ -1700,7 +1847,7 @@ i.antd-pro-components-global-header-index-trigger {
   }
   .antd-pro-components-top-nav-header-index-main {
     display: flex;
-    height: 64px;
+    height: @layout-header-height;
     padding-left: 24px;
     &.antd-pro-components-top-nav-header-index-wide {
       max-width: 1200px;
@@ -1719,9 +1866,9 @@ i.antd-pro-components-global-header-index-trigger {
 
 .antd-pro-components-top-nav-header-index-logo {
   width: 165px;
-  height: 64px;
+  height: @layout-header-height;
   position: relative;
-  line-height: 64px;
+  line-height: @layout-header-height;
   transition: all 0.3s;
   overflow: hidden;
   img {
@@ -1745,7 +1892,15 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+.antd-pro-components-top-nav-header-index-menu {
+  border: none;
+  height: @layout-header-height;
+  line-height: @layout-header-height;
+}
+
+/* 
+  Convert to from  src/components/Trend/index.less
+ */
 
 .antd-pro-components-trend-index-trendItem {
   display: inline-block;
@@ -1787,6 +1942,17 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
+/* 
+  Convert to from  src/layouts/BasicLayout.less
+ */
+.antd-pro-layouts-basic-layout-content {
+  margin: 24px;
+  padding-top: @layout-header-height;
+}
+
+/* 
+  Convert to from  src/layouts/Header.less
+ */
 .antd-pro-layouts-header-fixedHeader {
   position: fixed;
   top: 0;
@@ -1796,7 +1962,9 @@ i.antd-pro-components-global-header-index-trigger {
   transition: width 0.2s;
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/layouts/UserLayout.less
+ */
 
 .antd-pro-layouts-user-layout-container {
   display: flex;
@@ -1811,7 +1979,7 @@ i.antd-pro-components-global-header-index-trigger {
   width: 100%;
   height: 40px;
   line-height: 44px;
-  .ant-dropdown-trigger {
+  :global(.ant-dropdown-trigger) {
     margin-right: 24px;
   }
 }
@@ -1830,7 +1998,7 @@ i.antd-pro-components-global-header-index-trigger {
   }
 
   .antd-pro-layouts-user-layout-content {
-    padding: 72px 0 24px 0;
+    padding: 32px 0 24px 0;
   }
 }
 
@@ -1855,7 +2023,7 @@ i.antd-pro-components-global-header-index-trigger {
 .antd-pro-layouts-user-layout-title {
   font-size: 33px;
   color: @heading-color;
-  font-family: "Myriad Pro", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-family: Avenir, "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: 600;
   position: relative;
   top: 2px;
@@ -1868,15 +2036,20 @@ i.antd-pro-components-global-header-index-trigger {
   margin-bottom: 40px;
 }
 
+/* 
+  Convert to from  src/pages/Exception/style.less
+ */
 .antd-pro-pages-exception-style-trigger {
   background: "red";
-  .ant-btn {
+  :global(.ant-btn) {
     margin-right: 8px;
     margin-bottom: 12px;
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/pages/Forms/style.less
+*/
 
 .antd-pro-pages-forms-style-card {
   margin-bottom: 24px;
@@ -1888,7 +2061,7 @@ i.antd-pro-components-global-header-index-trigger {
   margin: 0 0 16px 0;
 }
 
-.ant-steps {
+.steps:global(.ant-steps) {
   max-width: 750px;
   margin: 16px auto;
 }
@@ -1963,8 +2136,9 @@ i.antd-pro-components-global-header-index-trigger {
   font-style: normal;
 }
 
-@import "~antd/lib/style/themes/default.less";
-@import "~@/utils/utils.less";
+/* 
+  Convert to from  src/pages/List/TableList.less
+ */
 
 .antd-pro-pages-list-table-list-tableList {
   .antd-pro-pages-list-table-list-tableListOperator {
@@ -1989,10 +2163,10 @@ i.antd-pro-components-global-header-index-trigger {
       line-height: 32px;
     }
   }
-  .antd-pro-pages-list-table-list-ant-form-item-control-wrapper {
+  .ant-form-item-control-wrapper {
     flex: 1;
   }
-  .submitButtons {
+  .antd-pro-pages-list-table-list-submitButtons {
     display: block;
     white-space: nowrap;
     margin-bottom: 24px;
@@ -2000,18 +2174,20 @@ i.antd-pro-components-global-header-index-trigger {
 }
 
 @media screen and (max-width: @screen-lg) {
-  .ant-form-item {
+  .tableListForm :global(.ant-form-item) {
     margin-right: 24px;
   }
 }
 
 @media screen and (max-width: @screen-md) {
-  .ant-form-item {
+  .tableListForm :global(.ant-form-item) {
     margin-right: 8px;
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/pages/Profile/AdvancedProfile.less
+ */
 
 .antd-pro-pages-profile-advanced-profile-headerList {
   margin-bottom: 4px;
@@ -2064,8 +2240,9 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
-
+/* 
+  Convert to from  src/pages/Profile/BasicProfile.less
+ */
 .antd-pro-pages-profile-basic-profile-title {
   color: @heading-color;
   font-size: 16px;
@@ -2073,8 +2250,9 @@ i.antd-pro-components-global-header-index-trigger {
   margin-bottom: 16px;
 }
 
-@import "~antd/lib/style/themes/default.less";
-
+/* 
+  Convert to from  src/pages/User/Login.less
+ */
 .antd-pro-pages-user-login-main {
   width: 368px;
   margin: 0 auto;
@@ -2106,7 +2284,9 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
-@import "~antd/lib/style/themes/default.less";
+/* 
+  Convert to from  src/pages/User/Register.less
+ */
 
 .antd-pro-pages-user-register-main {
   width: 368px;
@@ -2160,6 +2340,9 @@ i.antd-pro-components-global-header-index-trigger {
   }
 }
 
+/* 
+  Convert to from  src/pages/User/RegisterResult.less
+ */
 .antd-pro-pages-user-register-result-registerResult {
   .anticon {
     font-size: 64px;
@@ -2176,6 +2359,10 @@ i.antd-pro-components-global-header-index-trigger {
     }
   }
 }
+
+/* 
+  Convert to from  src/utils/utils.less
+*/
 
 .textOverflow() {
   overflow: hidden;
