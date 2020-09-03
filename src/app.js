@@ -21,11 +21,45 @@ function ergodicRoutes(routes, authKey, authority) {
   });
 }
 
+function customerErgodicRoutes(routes) {
+  const menuAutArray = (localStorage.getItem('routerAutArray') || '').split(',');
+
+  routes.forEach(element => {
+    // 没有path的情况下不需要走逻辑检查
+    // path 为 /user 不需要走逻辑检查
+    if (element.path === '/user' || !element.path) {
+      return element;
+    }
+
+    // notInAut 为true的情况下不需要走逻辑检查
+    if (!element.notInAut) {
+      if (menuAutArray.indexOf(element.code) >= 0 || element.path === '/') {
+        if (element.routes) {
+          // eslint-disable-next-line no-param-reassign
+          element.routes = customerErgodicRoutes(element.routes);
+
+          // eslint-disable-next-line no-param-reassign
+          element.routes = element.routes.filter(item => !item.isNeedDelete);
+        }
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        element.isNeedDelete = true;
+      }
+    }
+    return element;
+  });
+
+  return routes;
+}
+
 export function patchRoutes(routes) {
   Object.keys(authRoutes).map(authKey =>
-    ergodicRoutes(routes, authKey, authRoutes[authKey].authority)
+    ergodicRoutes(routes, authKey, authRoutes[authKey].authority),
   );
-  window.g_routes = routes;
+
+  customerErgodicRoutes(routes);
+
+  window.g_routes = routes.filter(item => !item.isNeedDelete);
 }
 
 export function render(oldRender) {
