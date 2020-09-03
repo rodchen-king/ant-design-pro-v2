@@ -37,7 +37,12 @@ export default {
             return;
           }
         }
-        yield put(routerRedux.replace(redirect || '/'));
+        // 这里的数据通过接口返回菜单页面的权限是什么
+        localStorage.setItem('routerAutArray', ['list_menu', 'list_tableList_page'].join(','));
+        // yield put(routerRedux.replace(redirect || '/'));
+
+        // 这里之所以用页面跳转，因为路由的重新设置需要页面重新刷新才可以生效
+        window.location.href = redirect || '/';
       }
     },
 
@@ -60,7 +65,7 @@ export default {
           search: stringify({
             redirect: window.location.href,
           }),
-        })
+        }),
       );
     },
   },
