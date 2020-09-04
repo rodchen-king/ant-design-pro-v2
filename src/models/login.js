@@ -1,6 +1,7 @@
 import { routerRedux } from 'dva/router';
 import { stringify } from 'qs';
 import { fakeAccountLogin, getFakeCaptcha } from '@/services/api';
+import { getAuthorityMenu } from '@/services/authority';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 import { reloadAuthorized } from '@/utils/Authorized';
@@ -21,6 +22,10 @@ export default {
       });
       // Login successfully
       if (response.status === 'ok') {
+        // 这里的数据通过接口返回菜单页面的权限是什么
+        const authMenuArray = yield call(getAuthorityMenu, []);
+        localStorage.setItem('routerAutArray', authMenuArray.join(','));
+
         reloadAuthorized();
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
@@ -37,8 +42,6 @@ export default {
             return;
           }
         }
-        // 这里的数据通过接口返回菜单页面的权限是什么
-        localStorage.setItem('routerAutArray', ['list_menu', 'list_tableList_page'].join(','));
         // yield put(routerRedux.replace(redirect || '/'));
 
         // 这里之所以用页面跳转，因为路由的重新设置需要页面重新刷新才可以生效

@@ -111,7 +111,7 @@ class UpdateForm extends PureComponent {
           } else {
             handleUpdate(formVals);
           }
-        }
+        },
       );
     });
   };
@@ -141,7 +141,7 @@ class UpdateForm extends PureComponent {
             <Select style={{ width: '100%' }}>
               <Option value="0">表一</Option>
               <Option value="1">表二</Option>
-            </Select>
+            </Select>,
           )}
         </FormItem>,
         <FormItem key="template" {...this.formLayout} label="规则模板">
@@ -151,7 +151,7 @@ class UpdateForm extends PureComponent {
             <Select style={{ width: '100%' }}>
               <Option value="0">规则模板一</Option>
               <Option value="1">规则模板二</Option>
-            </Select>
+            </Select>,
           )}
         </FormItem>,
         <FormItem key="type" {...this.formLayout} label="规则类型">
@@ -161,7 +161,7 @@ class UpdateForm extends PureComponent {
             <RadioGroup>
               <Radio value="0">强</Radio>
               <Radio value="1">弱</Radio>
-            </RadioGroup>
+            </RadioGroup>,
           )}
         </FormItem>,
       ];
@@ -177,7 +177,7 @@ class UpdateForm extends PureComponent {
               showTime
               format="YYYY-MM-DD HH:mm:ss"
               placeholder="选择开始时间"
-            />
+            />,
           )}
         </FormItem>,
         <FormItem key="frequency" {...this.formLayout} label="调度周期">
@@ -187,7 +187,7 @@ class UpdateForm extends PureComponent {
             <Select style={{ width: '100%' }}>
               <Option value="month">月</Option>
               <Option value="week">周</Option>
-            </Select>
+            </Select>,
           )}
         </FormItem>,
       ];
@@ -273,8 +273,9 @@ class UpdateForm extends PureComponent {
 }
 
 /* eslint react/no-multi-comp:0 */
-@connect(({ rule, loading }) => ({
+@connect(({ rule, loading, globalAuthority }) => ({
   rule,
+  globalAuthority,
   loading: loading.models.rule,
 }))
 @Form.create()
@@ -286,6 +287,15 @@ class TableList extends PureComponent {
     selectedRows: [],
     formValues: {},
     stepFormValues: {},
+    authority: {
+      add: true,
+      import: true,
+      export: true,
+      distribution: true,
+      notifyDeliver: true,
+      finish: true,
+      void: true,
+    },
   };
 
   columns = [
@@ -353,6 +363,14 @@ class TableList extends PureComponent {
     const { dispatch } = this.props;
     dispatch({
       type: 'rule/fetch',
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { authority } = this.state;
+
+    this.setState({
+      authority: { ...authority, ...nextProps.globalAuthority.authority },
     });
   }
 
@@ -514,7 +532,7 @@ class TableList extends PureComponent {
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   <Option value="0">关闭</Option>
                   <Option value="1">运行中</Option>
-                </Select>
+                </Select>,
               )}
             </FormItem>
           </Col>
@@ -554,7 +572,7 @@ class TableList extends PureComponent {
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   <Option value="0">关闭</Option>
                   <Option value="1">运行中</Option>
-                </Select>
+                </Select>,
               )}
             </FormItem>
           </Col>
@@ -568,7 +586,7 @@ class TableList extends PureComponent {
           <Col md={8} sm={24}>
             <FormItem label="更新日期">
               {getFieldDecorator('date')(
-                <DatePicker style={{ width: '100%' }} placeholder="请输入更新日期" />
+                <DatePicker style={{ width: '100%' }} placeholder="请输入更新日期" />,
               )}
             </FormItem>
           </Col>
@@ -578,7 +596,7 @@ class TableList extends PureComponent {
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   <Option value="0">关闭</Option>
                   <Option value="1">运行中</Option>
-                </Select>
+                </Select>,
               )}
             </FormItem>
           </Col>
@@ -588,7 +606,7 @@ class TableList extends PureComponent {
                 <Select placeholder="请选择" style={{ width: '100%' }}>
                   <Option value="0">关闭</Option>
                   <Option value="1">运行中</Option>
-                </Select>
+                </Select>,
               )}
             </FormItem>
           </Col>
@@ -620,7 +638,13 @@ class TableList extends PureComponent {
       rule: { data },
       loading,
     } = this.props;
-    const { selectedRows, modalVisible, updateModalVisible, stepFormValues } = this.state;
+    const {
+      selectedRows,
+      modalVisible,
+      updateModalVisible,
+      stepFormValues,
+      authority,
+    } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
@@ -637,14 +661,17 @@ class TableList extends PureComponent {
       handleUpdate: this.handleUpdate,
     };
     return (
-      <PageHeaderWrapper title="查询表格">
+      <PageHeaderWrapper page="table" title="查询表格">
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>{this.renderForm()}</div>
             <div className={styles.tableListOperator}>
-              <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
-                新建
-              </Button>
+              {authority.add && (
+                <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+                  新建
+                </Button>
+              )}
+
               {selectedRows.length > 0 && (
                 <span>
                   <Button>批量操作</Button>
