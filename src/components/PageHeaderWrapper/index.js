@@ -10,13 +10,16 @@ import styles from './index.less';
 
 class PageHeaderWrapper extends PureComponent {
   componentDidMount() {
-    const { dispatch, page } = this.props;
-
+    const { dispatch } = this.props;
     dispatch({
       type: 'globalAuthority/getAuthorityForPage',
-      payload: {
-        page,
-      },
+    });
+  }
+
+  componentWillUnmount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'globalAuthority/resetAuthorityForPage',
     });
   }
 

@@ -9,30 +9,10 @@ function getAuthority(req, res) {
 
   let response = {};
 
-  if (params.page === 'form') {
-    response = {
-      authority: {
-        add: true,
-        import: true,
-        export: true,
-        distribution: true,
-        notifyDeliver: true,
-        finish: true,
-        void: true,
-      },
-    };
+  if (params.page === '10003,10004') {
+    response = ['10003', '10004'];
   } else {
-    response = {
-      authority: {
-        add: false,
-        import: true,
-        export: true,
-        distribution: true,
-        notifyDeliver: true,
-        finish: true,
-        void: true,
-      },
-    };
+    response = ['10001', '10002'];
   }
 
   return res.json(response);

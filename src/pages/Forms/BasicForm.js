@@ -14,6 +14,7 @@ import {
   Tooltip,
 } from 'antd';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import AuthoriedButton from '@/components/AuthorizedButton';
 import styles from './style.less';
 
 const FormItem = Form.Item;
@@ -66,8 +67,6 @@ class BasicForms extends PureComponent {
       form: { getFieldDecorator, getFieldValue },
     } = this.props;
 
-    const { authority } = this.state;
-
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -93,11 +92,16 @@ class BasicForms extends PureComponent {
         title={<FormattedMessage id="app.forms.basic.title" />}
         content={<FormattedMessage id="app.forms.basic.description" />}
       >
-        {authority.add && (
+        <AuthoriedButton code="10003">
           <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
             新建
           </Button>
-        )}
+        </AuthoriedButton>
+        <AuthoriedButton code="10004">
+          <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+            编辑
+          </Button>
+        </AuthoriedButton>
         <Card bordered={false}>
           <Form onSubmit={this.handleSubmit} hideRequiredMark style={{ marginTop: 8 }}>
             <FormItem {...formItemLayout} label={<FormattedMessage id="form.title.label" />}>

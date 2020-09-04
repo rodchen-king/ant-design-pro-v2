@@ -22,6 +22,7 @@ import {
   Radio,
 } from 'antd';
 import StandardTable from '@/components/StandardTable';
+import AuthoriedButton from '@/components/AuthorizedButton';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
 
 import styles from './TableList.less';
@@ -638,13 +639,7 @@ class TableList extends PureComponent {
       rule: { data },
       loading,
     } = this.props;
-    const {
-      selectedRows,
-      modalVisible,
-      updateModalVisible,
-      stepFormValues,
-      authority,
-    } = this.state;
+    const { selectedRows, modalVisible, updateModalVisible, stepFormValues } = this.state;
     const menu = (
       <Menu onClick={this.handleMenuClick} selectedKeys={[]}>
         <Menu.Item key="remove">删除</Menu.Item>
@@ -666,11 +661,16 @@ class TableList extends PureComponent {
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>{this.renderForm()}</div>
             <div className={styles.tableListOperator}>
-              {authority.add && (
+              <AuthoriedButton code="10001">
                 <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                   新建
                 </Button>
-              )}
+              </AuthoriedButton>
+              <AuthoriedButton code="10002">
+                <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+                  编辑
+                </Button>
+              </AuthoriedButton>
 
               {selectedRows.length > 0 && (
                 <span>
