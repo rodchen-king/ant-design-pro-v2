@@ -19,18 +19,19 @@ export default {
       const pageCodeArray = yield select(state => state.globalAuthority.pageCodeArray);
       const response = yield call(getAuthority, pageCodeArray);
 
-      yield put({
-        type: 'save',
-        payload: {
-          hasAuthorityCodeArray: response,
-        },
-      });
+      if (pageCodeArray.length) {
+        yield put({
+          type: 'save',
+          payload: {
+            hasAuthorityCodeArray: response,
+          },
+        });
+      }
     },
 
     *plusCode({ payload }, { put, select }) {
       // 组件累加当前页面的code，用来发送请求返回对应的权限code
       const { code } = payload;
-
       const pageCodeArray = yield select(state => state.globalAuthority.pageCodeArray);
 
       yield put({

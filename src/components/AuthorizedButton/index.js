@@ -12,7 +12,6 @@ class AuthorizedButton extends Component {
 
   componentWillMount() {
     const { dispatch, code } = this.props;
-
     dispatch({
       type: 'globalAuthority/plusCode',
       payload: {
@@ -26,7 +25,7 @@ class AuthorizedButton extends Component {
       globalAuthority: { hasAuthorityCodeArray },
     } = this.props;
 
-    return hasAuthorityCodeArray.indexOf(code) >= 0;
+    return hasAuthorityCodeArray.indexOf(code) >= 0; // 资源权限
   };
 
   render() {

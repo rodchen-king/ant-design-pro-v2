@@ -12,7 +12,7 @@ class PageHeaderWrapper extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'globalAuthority/getAuthorityForPage',
+      type: 'globalAuthority/getAuthorityForPage', // 发送请求获取当前页面的权限code
     });
   }
 
