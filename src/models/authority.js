@@ -31,13 +31,13 @@ export default {
 
     *plusCode({ payload }, { put, select }) {
       // 组件累加当前页面的code，用来发送请求返回对应的权限code
-      const { code } = payload;
+      const { codeArray = [] } = payload;
       const pageCodeArray = yield select(state => state.globalAuthority.pageCodeArray);
 
       yield put({
         type: 'save',
         payload: {
-          pageCodeArray: [...pageCodeArray, code],
+          pageCodeArray: pageCodeArray.concat(codeArray),
         },
       });
     },

@@ -11,11 +11,33 @@ class AuthorizedButton extends Component {
   };
 
   componentWillMount() {
-    const { dispatch, code } = this.props;
+    // extendcode 扩展表格中的code还没有出现的情况
+    const {
+      dispatch,
+      code,
+      extendCode = [],
+      globalAuthority: { pageCodeArray },
+    } = this.props;
+
+    let codeArray = [];
+
+    if (code) {
+      codeArray.push(code);
+    }
+
+    if (extendCode && extendCode.length) {
+      codeArray = codeArray.concat(extendCode);
+    }
+
+    // code已经存在，证明是页面数据渲染之后或者弹出框的按钮资源，不需要走dva了
+    if (pageCodeArray.indexOf(code) >= 0) {
+      return;
+    }
+
     dispatch({
       type: 'globalAuthority/plusCode',
       payload: {
-        code,
+        codeArray,
       },
     });
   }

@@ -352,7 +352,9 @@ class TableList extends PureComponent {
       title: '操作',
       render: (text, record) => (
         <Fragment>
-          <a onClick={() => this.handleUpdateModalVisible(true, record)}>配置</a>
+          <AuthoriedButton code="10005">
+            <a onClick={() => this.handleUpdateModalVisible(true, record)}>配置</a>
+          </AuthoriedButton>
           <Divider type="vertical" />
           <a href="">订阅警报</a>
         </Fragment>
@@ -657,11 +659,12 @@ class TableList extends PureComponent {
     };
     return (
       <PageHeaderWrapper page="table" title="查询表格">
+        <AuthoriedButton extendCode={['10006']} />
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>{this.renderForm()}</div>
             <div className={styles.tableListOperator}>
-              <AuthoriedButton code="10001">
+              <AuthoriedButton code="10001" extendCode={['10005']}>
                 <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                   新建
                 </Button>
