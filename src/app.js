@@ -44,6 +44,34 @@ function customerErgodicRoutes(routes) {
         element.isNeedDelete = true;
       }
     }
+
+    /**
+     * 后台接口返回子节点的情况，父节点需要溯源处理
+     */
+    // notInAut 为true的情况下不需要走逻辑检查
+    // if (!element.notInAut) {
+    //   if (element.routes) {
+    //     // eslint-disable-next-line no-param-reassign
+    //     element.routes = customerErgodicRoutes(element.routes);
+
+    //     // eslint-disable-next-line no-param-reassign
+    //     if (element.routes.filter(item => item.isNeedSave && !item.hideInMenu).length) {
+    //       // eslint-disable-next-line no-param-reassign
+    //       element.routes = element.routes.filter(item => item.isNeedSave);
+    //       if (element.routes.length) {
+    //         // eslint-disable-next-line no-param-reassign
+    //         element.isNeedSave = true;
+    //       }
+    //     }
+    //   } else if (menuAutArray.indexOf(element.code) >= 0) {
+    //     // eslint-disable-next-line no-param-reassign
+    //     element.isNeedSave = true;
+    //   }
+    // } else {
+    //   // eslint-disable-next-line no-param-reassign
+    //   element.isNeedSave = true;
+    // }
+
     return element;
   });
 
@@ -57,7 +85,15 @@ export function patchRoutes(routes) {
 
   customerErgodicRoutes(routes);
 
+  /**
+   * 后台接口返回子节点的情况，父节点需要溯源处理
+   */
   window.g_routes = routes.filter(item => !item.isNeedDelete);
+
+  /**
+   * 后台接口返回子节点的情况，父节点需要溯源处理
+   */
+  // window.g_routes = routes.filter(item => item.isNeedSave);
 }
 
 export function render(oldRender) {
