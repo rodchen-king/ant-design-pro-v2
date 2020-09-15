@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Router as DefaultRouter,
-  Route,
-  Switch,
-  StaticRouter,
-} from 'react-router-dom';
+import { Router as DefaultRouter, Route, Switch, StaticRouter } from 'react-router-dom';
 import dynamic from 'umi/dynamic';
 import renderRoutes from 'umi/lib/renderRoutes';
 import history from '@@/history';
@@ -42,8 +37,7 @@ const routes = [
                   },
                 ),
               ],
-              component: () =>
-                import(/* webpackChunkName: "p__User__Login" */ '../User/Login'),
+              component: () => import(/* webpackChunkName: "p__User__Login" */ '../User/Login'),
               LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
                 .default,
             })
@@ -122,9 +116,11 @@ const routes = [
         path: '/form',
         icon: 'form',
         name: 'form',
+        code: 'form_menu',
         routes: [
           {
             path: '/form/basic-form',
+            code: 'form_basicForm_page',
             name: 'basicform',
             component: __IS_BROWSER
               ? _dvaDynamic({
@@ -158,10 +154,12 @@ const routes = [
         path: '/list',
         icon: 'table',
         name: 'list',
+        code: 'list_menu',
         routes: [
           {
             path: '/list/table-list',
             name: 'searchtable',
+            code: 'list_tableList_page',
             component: __IS_BROWSER
               ? _dvaDynamic({
                   app: require('@tmp/dva').getApp(),
@@ -194,10 +192,12 @@ const routes = [
         path: '/profile',
         name: 'profile',
         icon: 'profile',
+        code: 'profile_menu',
         routes: [
           {
             path: '/profile/basic',
             name: 'basic',
+            code: 'profile_basic_page',
             component: __IS_BROWSER
               ? _dvaDynamic({
                   app: require('@tmp/dva').getApp(),
@@ -219,6 +219,7 @@ const routes = [
           {
             path: '/profile/advanced',
             name: 'advanced',
+            code: 'profile_advanced_page',
             authority: ['admin'],
             component: __IS_BROWSER
               ? _dvaDynamic({
@@ -251,6 +252,7 @@ const routes = [
       {
         name: 'exception',
         icon: 'warning',
+        notInAut: true,
         hideInMenu: true,
         path: '/exception',
         routes: [
@@ -350,10 +352,10 @@ const routes = [
         ],
       },
       {
+        notInAut: true,
         component: __IS_BROWSER
           ? _dvaDynamic({
-              component: () =>
-                import(/* webpackChunkName: "p__404" */ '../404'),
+              component: () => import(/* webpackChunkName: "p__404" */ '../404'),
               LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
                 .default,
             })
@@ -405,9 +407,7 @@ export default class RouterWrapper extends React.Component {
     // dva 中 history.listen 会初始执行一次
     // 这里排除掉 dva 的场景，可以避免 onRouteChange 在启用 dva 后的初始加载时被多执行一次
     const isDva =
-      history.listen
-        .toString()
-        .indexOf('callback(history.location, history.action)') > -1;
+      history.listen.toString().indexOf('callback(history.location, history.action)') > -1;
     if (!isDva) {
       routeChangeHandler(history.location);
     }
