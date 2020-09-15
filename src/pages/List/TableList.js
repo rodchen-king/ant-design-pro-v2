@@ -288,6 +288,15 @@ class TableList extends PureComponent {
     selectedRows: [],
     formValues: {},
     stepFormValues: {},
+    authority: {
+      add: true,
+      import: true,
+      export: true,
+      distribution: true,
+      notifyDeliver: true,
+      finish: true,
+      void: true,
+    },
   };
 
   columns = [
@@ -357,6 +366,14 @@ class TableList extends PureComponent {
     const { dispatch } = this.props;
     dispatch({
       type: 'rule/fetch',
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { authority } = this.state;
+
+    this.setState({
+      authority: { ...authority, ...nextProps.globalAuthority.authority },
     });
   }
 

@@ -28,6 +28,26 @@ const { TextArea } = Input;
 }))
 @Form.create()
 class BasicForms extends PureComponent {
+  state = {
+    authority: {
+      add: true,
+      import: true,
+      export: true,
+      distribution: true,
+      notifyDeliver: true,
+      finish: true,
+      void: true,
+    },
+  };
+
+  componentWillReceiveProps(nextProps) {
+    const { authority } = this.state;
+
+    this.setState({
+      authority: { ...authority, ...nextProps.globalAuthority.authority },
+    });
+  }
+
   handleSubmit = e => {
     const { dispatch, form } = this.props;
     e.preventDefault();
@@ -68,6 +88,7 @@ class BasicForms extends PureComponent {
 
     return (
       <PageHeaderWrapper
+        page="form"
         title={<FormattedMessage id="app.forms.basic.title" />}
         content={<FormattedMessage id="app.forms.basic.description" />}
       >
