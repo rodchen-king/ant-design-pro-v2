@@ -16,7 +16,7 @@
 <br />
 
 ### 权限处理
-* [菜单页面权限]()
+* [菜单页面权限](https://github.com/rodchen-king/ant-design-pro-v2/commit/0e7895c56e4962d75ab8ccf4637cefca3f5f71b6)
 * 按钮权限 
 
 <br />
