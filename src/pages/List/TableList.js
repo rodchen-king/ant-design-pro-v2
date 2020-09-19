@@ -38,6 +38,7 @@ const getValue = obj =>
     .join(',');
 const statusMap = ['default', 'processing', 'success', 'error'];
 const status = ['关闭', '运行中', '已上线', '异常'];
+const recordType = ['输入单据', '输出单据', '删除单据', '驳回单据'];
 
 const CreateForm = Form.create()(props => {
   const { modalVisible, form, handleAdd, handleModalVisible } = props;
@@ -323,6 +324,13 @@ class TableList extends PureComponent {
       render: val => `${val} 万`,
       // mark to display a total number
       needTotal: true,
+    },
+    {
+      title: '数据类型',
+      dataIndex: 'status',
+      render(val) {
+        return recordType[val];
+      },
     },
     {
       title: '状态',
