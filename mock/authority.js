@@ -9,10 +9,10 @@ function getAuthority(req, res) {
 
   let response = {};
 
-  if (params.page === '10003,10004') {
+  if (params.codes === '10003,10004') {
     response = ['10003', '10004'];
   } else {
-    response = ['10001', '10002', '10005'];
+    response = ['10001', '10002', '10005', '20001'];
   }
 
   return res.json(response);

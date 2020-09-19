@@ -303,6 +303,13 @@ class TableList extends PureComponent {
     {
       title: '规则名称',
       dataIndex: 'name',
+      render: value => {
+        const {
+          globalAuthority: { codeAuthorityObject },
+        } = this.props;
+
+        return codeAuthorityObject['20001'] ? <a>{value}</a> : <span>{value}</span>;
+      },
     },
     {
       title: '描述',
@@ -664,7 +671,7 @@ class TableList extends PureComponent {
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>{this.renderForm()}</div>
             <div className={styles.tableListOperator}>
-              <AuthoriedButton code="10001" extendCode={['10005']}>
+              <AuthoriedButton code="10001" extendCode={['10005', '20001']}>
                 <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                   新建
                 </Button>
