@@ -10,6 +10,18 @@ export default {
   namespace: 'globalAuthority',
 
   state: {
+    dataAuthorityForRecordType: {
+      '1': ['peizhi', 'dingyuejingbao', 'piliangcaozuo', 'gengduocaozuo'], // 输入单据: 配置权限，订阅警报权限，批量操作权限，更多操作权限
+      '2': ['piliangcaozuo', 'gengduocaozuo'], // 输出单据: 批量操作权限，更多操作权限
+      '3': ['peizhi', 'gengduocaozuo'], // 删除单据: 配置权限，更多操作权限
+      '4': ['dingyuejingbao', 'piliangcaozuo'], // 驳回单据: 订阅警报权限，批量操作权限
+    },
+    rowsBttonAuthotityInRecordType: {
+      peizhi: ['1', '3'], // 配置按钮：输入单据，删除单据
+      dingyuejingbao: ['1', '4'], // 订阅警报权限：输入单据，输出单据，驳回单据
+      piliangcaozuo: ['1', '2', '4'], // 批量操作权限：输入单据，删除单据
+      gengduocaozuo: ['1', '2', '3'], // 更多操作权限：输入单据，输出单据，删除单据
+    },
     hasAuthorityCodeArray: [], // 获取当前具有权限的资源code
     pageCodeArray: [], // 用来存储当前页面存在的资源code
     codeAuthorityObject: {}, // 页面code对应的权限

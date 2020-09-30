@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import { connect } from 'dva';
 
 @connect(({ globalAuthority }) => ({
@@ -47,7 +48,35 @@ class AuthorizedButton extends Component {
       globalAuthority: { hasAuthorityCodeArray },
     } = this.props;
 
-    return hasAuthorityCodeArray.indexOf(code) >= 0; // 资源权限
+    return hasAuthorityCodeArray.indexOf(code) >= 0 && this.checkDataAuthority(); // 资源权限
+  };
+
+  /**
+   * 检测数据权限
+   */
+  checkDataAuthority = () => {
+    const {
+      globalAuthority: { dataAuthorityForRecordType, rowsBttonAuthotityInRecordType },
+      recordType,
+      buttonType,
+      dataTypeArray,
+    } = this.props;
+
+    if (recordType && buttonType) {
+      const recordAuthorityObject = dataAuthorityForRecordType[recordType];
+
+      if (_.isArray(recordAuthorityObject)) {
+        return recordAuthorityObject.indexOf(buttonType) >= 0;
+      }
+
+      return false;
+    }
+
+    if (dataTypeArray) {
+      console.log(dataTypeArray);
+    }
+
+    return true; // 如果字段没有值的情况下，证明不需要进行数据权限
   };
 
   render() {

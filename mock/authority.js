@@ -12,7 +12,7 @@ function getAuthority(req, res) {
   if (params.codes === '10003,10004') {
     response = ['10003', '10004'];
   } else {
-    response = ['10001', '10002', '10005', '20001'];
+    response = ['10001', '10002', '10005', '20001', '10006', '10007', '10008'];
   }
 
   return res.json(response);
