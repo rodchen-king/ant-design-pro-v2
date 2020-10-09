@@ -1,3 +1,7 @@
+/*
+ * @Date: 2020-09-07 11:47:36
+ * @LastEditTime: 2020-09-07 11:49:17
+ */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-prototype-builtins */
 import { getAuthority } from '@/services/authority';
@@ -8,6 +12,7 @@ export default {
   state: {
     hasAuthorityCodeArray: [], // 获取当前具有权限的资源code
     pageCodeArray: [], // 用来存储当前页面存在的资源code
+    codeAuthorityObject: {}, // 页面code对应的权限
   },
 
   effects: {
@@ -18,15 +23,21 @@ export default {
       // 这里的资源code都是自己加载的
       const pageCodeArray = yield select(state => state.globalAuthority.pageCodeArray);
       const response = yield call(getAuthority, pageCodeArray);
+      const hasAuthorityCodeArray = response || [];
+      const codeAuthorityObject = {};
 
-      if (pageCodeArray.length) {
-        yield put({
-          type: 'save',
-          payload: {
-            hasAuthorityCodeArray: response,
-          },
-        });
-      }
+      pageCodeArray.forEach((value, index, array) => {
+        codeAuthorityObject[value] =
+          hasAuthorityCodeArray.map(item => item.code).indexOf(value) >= 0;
+      });
+
+      yield put({
+        type: 'save',
+        payload: {
+          hasAuthorityCodeArray,
+          codeAuthorityObject,
+        },
+      });
     },
 
     *plusCode({ payload }, { put, select }) {
