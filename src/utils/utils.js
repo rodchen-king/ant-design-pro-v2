@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React from 'react';
-import { message } from "antd";
+import { message } from 'antd';
 import nzh from 'nzh/cn';
 import { parse, stringify } from 'qs';
 
@@ -113,7 +113,7 @@ function getRenderArr(routes) {
  */
 export function getRoutes(path, routerData) {
   let routes = Object.keys(routerData).filter(
-    routePath => routePath.indexOf(path) === 0 && routePath !== path
+    routePath => routePath.indexOf(path) === 0 && routePath !== path,
   );
   // Replace path to '' eg. path='user' /user/name => name
   routes = routes.map(item => item.replace(path, ''));
@@ -190,7 +190,7 @@ export function isAntdPro() {
  * @param {*} needBackError    是否需要将错误回传到页面单独处理
  */
 export function handleError(response, needBackError) {
-  if (!response || response.code !== "000000") {
+  if (!response || response.code !== '000000') {
     if (response && !needBackError) {
       message.error(response.msg || response.errmsg);
     }
@@ -198,4 +198,10 @@ export function handleError(response, needBackError) {
   }
 
   return true;
+}
+
+// 获取数组不重复字段数组
+export function getNotDuplicateArrayById(array, key) {
+  const idArray = array.map(item => item[key]);
+  return [...new Set(idArray)];
 }

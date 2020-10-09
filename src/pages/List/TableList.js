@@ -24,6 +24,7 @@ import {
 import StandardTable from '@/components/StandardTable';
 import AuthoriedButton from '@/components/AuthorizedButton';
 import PageHeaderWrapper from '@/components/PageHeaderWrapper';
+import { getNotDuplicateArrayById } from '@/utils/utils';
 
 import styles from './TableList.less';
 
@@ -38,7 +39,6 @@ const getValue = obj =>
     .join(',');
 const statusMap = ['default', 'processing', 'success', 'error'];
 const status = ['关闭', '运行中', '已上线', '异常'];
-const recordType = ['输入单据', '输出单据', '删除单据', '驳回单据'];
 
 const CreateForm = Form.create()(props => {
   const { modalVisible, form, handleAdd, handleModalVisible } = props;
@@ -326,13 +326,6 @@ class TableList extends PureComponent {
       needTotal: true,
     },
     {
-      title: '数据类型',
-      dataIndex: 'status',
-      render(val) {
-        return recordType[val];
-      },
-    },
-    {
       title: '状态',
       dataIndex: 'status',
       filters: [
@@ -367,11 +360,13 @@ class TableList extends PureComponent {
       title: '操作',
       render: (text, record) => (
         <Fragment>
-          <AuthoriedButton code="10005">
+          <AuthoriedButton code="10005" recordPermissionType={record.permissionType}>
             <a onClick={() => this.handleUpdateModalVisible(true, record)}>配置</a>
           </AuthoriedButton>
           <Divider type="vertical" />
-          <a href="">订阅警报</a>
+          <AuthoriedButton code="10006" recordPermissionType={record.permissionType}>
+            <a href="">订阅警报</a>
+          </AuthoriedButton>
         </Fragment>
       ),
     },
@@ -674,12 +669,12 @@ class TableList extends PureComponent {
     };
     return (
       <PageHeaderWrapper page="table" title="查询表格">
-        <AuthoriedButton extendCode={['10006']} />
+        <AuthoriedButton extendCode={['20001', '10006', '10007', '10008']} />
         <Card bordered={false}>
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>{this.renderForm()}</div>
             <div className={styles.tableListOperator}>
-              <AuthoriedButton code="10001" extendCode={['10005', '20001']}>
+              <AuthoriedButton code="10001" extendCode={['10005']}>
                 <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
                   新建
                 </Button>
@@ -692,12 +687,22 @@ class TableList extends PureComponent {
 
               {selectedRows.length > 0 && (
                 <span>
-                  <Button>批量操作</Button>
-                  <Dropdown overlay={menu}>
-                    <Button>
-                      更多操作 <Icon type="down" />
-                    </Button>
-                  </Dropdown>
+                  <AuthoriedButton
+                    code="10007"
+                    actTypeArray={getNotDuplicateArrayById(selectedRows, 'permissionType')}
+                  >
+                    <Button>批量操作</Button>
+                  </AuthoriedButton>
+                  <AuthoriedButton
+                    code="10008"
+                    actTypeArray={getNotDuplicateArrayById(selectedRows, 'permissionType')}
+                  >
+                    <Dropdown overlay={menu}>
+                      <Button>
+                        更多操作 <Icon type="down" />
+                      </Button>
+                    </Dropdown>
+                  </AuthoriedButton>
                 </span>
               )}
             </div>

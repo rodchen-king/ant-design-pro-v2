@@ -74,3 +74,61 @@
 | 参数      | 说明                                      | 类型         | 默认值 |
 |----------|------------------------------------------|-------------|-------|
 | extendCode    | 需要代发请求的扩展code，例如表格行内的按钮           | string[]  | - |
+
+<br>
+
+#### 3. 数据权限
+
+<br>
+
+<font style="color: red">单条数据权限</font>
+
+<br>
+
+```
+<AuthoriedButton code="10005" recordPermissionType={record.permissionType}>
+  <a onClick={() => this.handleUpdateModalVisible(true, record)}>配置</a>
+</AuthoriedButton>
+```
+
+<br>
+
+| 参数      | 说明                                      | 类型         | 默认值 |
+|----------|------------------------------------------|-------------|-------|
+| code    | 页面资源code           | string  | - |
+| recordPermissionType    | 当前数据数据权限总和           | string[]  | - |
+| actType    | 可选项，手动传入当前按钮的actType，不传的话，则通过接口返回的数据使用         | string[]  | - |
+
+<br>
+
+<font style="color: red">批量操作</font>
+
+<br>
+
+```
+ <AuthoriedButton code="10007" actTypeArray={getNotDuplicateArrayById(selectedRows, 'permissionType')}>
+     <Button>批量操作</Button>
+ </AuthoriedButton>
+
+```
+
+<br>
+
+| 参数      | 说明                                      | 类型         | 默认值 |
+|----------|------------------------------------------|-------------|-------|
+| code    | 页面资源code           | string  | - |
+| actTypeArray    | 批量数据的权限总和集合           | string[]  | - |
+| actType    | 可选项，手动传入当前按钮的actType，不传的话，则通过接口返回的数据使用         | string[]  | - |
+
+<br>
+
+getNotDuplicateArrayById
+
+```
+// 获取数组不重复字段数组
+export function getNotDuplicateArrayById(array, key) {
+  const idArray = array.map(item => item[key]);
+  return [...new Set(idArray)];
+}
+
+```

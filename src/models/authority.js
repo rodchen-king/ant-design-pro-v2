@@ -27,10 +27,10 @@ export default {
       const codeAuthorityObject = {};
 
       pageCodeArray.forEach((value, index, array) => {
-        codeAuthorityObject[value] = hasAuthorityCodeArray.indexOf(value) >= 0;
+        codeAuthorityObject[value] =
+          hasAuthorityCodeArray.map(item => item.code).indexOf(value) >= 0;
       });
 
-      // debugger
       yield put({
         type: 'save',
         payload: {
