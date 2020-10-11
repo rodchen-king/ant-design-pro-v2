@@ -66,6 +66,31 @@ const filterMenuData = menuData => {
     .filter(item => item);
 };
 /**
+ * get SubMenu or Item
+ */
+const getSubRouteMenu = item => {
+  // doc: add hideChildrenInMenu
+  if (item.children && !item.hideChildrenInMenu && item.children.some(child => child.name)) {
+    return {
+      ...item,
+      children: filterRouterData(item.children), // eslint-disable-line
+    };
+  }
+  return item;
+};
+/**
+ * filter routerMenuData
+ */
+const filterRouterData = menuData => {
+  if (!menuData) {
+    return [];
+  }
+  return menuData
+    .filter(item => item.name)
+    .map(item => check(item.authority, getSubRouteMenu(item)))
+    .filter(item => item);
+};
+/**
  * 获取面包屑映射
  * @param {Object} menuData 菜单配置
  */
@@ -96,14 +121,18 @@ export default {
   },
 
   effects: {
-    *getMenuData({ payload }, { put }) {
+    *getMenuData({ payload, callback }, { put }) {
       const { routes, authority } = payload;
       const menuData = filterMenuData(memoizeOneFormatter(routes, authority));
-      const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(menuData);
+      const breadcrumbNameMap = memoizeOneGetBreadcrumbNameMap(
+        filterRouterData(memoizeOneFormatter(routes, authority)),
+      );
       yield put({
         type: 'save',
         payload: { menuData, breadcrumbNameMap },
       });
+
+      if (callback) callback(breadcrumbNameMap);
     },
   },
 

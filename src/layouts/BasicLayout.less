@@ -1,6 +1,16 @@
 @import '~antd/lib/style/themes/default.less';
 
 .content {
-  margin: 24px;
-  padding-top: @layout-header-height;
+  padding-top: 40px;
+  .contentBox {
+    .contentTabUrlBox {
+      height: 60px;
+      .contentTabUrl {
+        position: fixed;
+        width: calc(100% - 180px);
+        height: 40px;
+        z-index: 10;
+      }
+    }
+  }
 }

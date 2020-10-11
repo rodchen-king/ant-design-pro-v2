@@ -1,6 +1,12 @@
 function getAuthorityMenu(req, res) {
   // 模拟返回的菜单权限
-  return res.json(['list_menu', 'list_tableList_page', 'form_menu', 'form_basicForm_page']);
+  return res.json([
+    'list_menu',
+    'list_tableList_page',
+    'form_menu',
+    'form_basicForm_page',
+    'list_tableDetail_page',
+  ]);
 }
 
 function getAuthority(req, res) {

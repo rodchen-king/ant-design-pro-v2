@@ -28,9 +28,17 @@ class PageHeaderWrapper extends PureComponent {
 
     return (
       <Spin spinning={loading}>
-        <div style={{ margin: '-24px -24px 0' }} className={wrapperClassName}>
+        <div
+          style={{
+            paddingBottom: '20px',
+            margin: '-30px -20px 20px',
+            height: 'calc(100% - 40px)',
+            overflow: 'scroll',
+          }}
+          className={wrapperClassName}
+        >
           {top}
-          <MenuContext.Consumer>
+          {/* <MenuContext.Consumer>
             {value => (
               <PageHeader
                 wide={contentWidth === 'Fixed'}
@@ -47,7 +55,7 @@ class PageHeaderWrapper extends PureComponent {
                 }}
               />
             )}
-          </MenuContext.Consumer>
+          </MenuContext.Consumer> */}
           {children ? (
             <div className={styles.content}>
               <GridContent>{children}</GridContent>

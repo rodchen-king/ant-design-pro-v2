@@ -109,7 +109,16 @@ const routes = [
     routes: [
       {
         path: '/',
-        redirect: '/list/table-list',
+        code: 'home',
+        name: 'home',
+        hideInMenu: true,
+        component: __IS_BROWSER
+          ? _dvaDynamic({
+              component: () => import(/* webpackChunkName: "p__Home" */ '../Home'),
+              LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                .default,
+            })
+          : require('../Home').default,
         exact: true,
       },
       {
@@ -176,6 +185,29 @@ const routes = [
                     .default,
                 })
               : require('../List/TableList').default,
+            exact: true,
+          },
+          {
+            path: '/List/table-detail',
+            hideInMenu: true,
+            name: 'detail',
+            code: 'list_tableDetail_page',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  app: require('@tmp/dva').getApp(),
+                  models: () => [
+                    import(/* webpackChunkName: 'p__List__models__rule.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/List/models/rule.js').then(
+                      m => {
+                        return { namespace: 'rule', ...m.default };
+                      },
+                    ),
+                  ],
+                  component: () =>
+                    import(/* webpackChunkName: "layouts__BasicLayout" */ '../List/Detail'),
+                  LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../List/Detail').default,
             exact: true,
           },
           {
@@ -353,6 +385,10 @@ const routes = [
       },
       {
         notInAut: true,
+        path: '/404',
+        code: '404',
+        name: '404',
+        hideInMenu: true,
         component: __IS_BROWSER
           ? _dvaDynamic({
               component: () => import(/* webpackChunkName: "p__404" */ '../404'),

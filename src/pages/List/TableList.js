@@ -309,7 +309,11 @@ class TableList extends PureComponent {
           globalAuthority: { codeAuthorityObject },
         } = this.props;
 
-        return codeAuthorityObject['20001'] ? <a>{value}</a> : <span>{value}</span>;
+        return codeAuthorityObject['20001'] ? (
+          <a href={`#/List/table-detail?title=${value}`}>{value}</a>
+        ) : (
+          <span>{value}</span>
+        );
       },
     },
     {
