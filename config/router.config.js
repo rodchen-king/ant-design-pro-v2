@@ -18,7 +18,13 @@ export default [
     authority: ['admin', 'user'],
     routes: [
       // dashboard
-      { path: '/', redirect: '/list/table-list' },
+      {
+        path: '/',
+        code: 'home',
+        name: 'home',
+        hideInMenu: true,
+        component: './Home',
+      },
       // forms
       {
         path: '/form',
@@ -46,6 +52,13 @@ export default [
             name: 'searchtable',
             code: 'list_tableList_page',
             component: './List/TableList',
+          },
+          {
+            path: '/List/table-detail',
+            hideInMenu: true,
+            name: 'detail',
+            code: 'list_tableDetail_page',
+            component: './List/Detail',
           },
         ],
       },
@@ -104,6 +117,10 @@ export default [
       },
       {
         notInAut: true,
+        path: '/404',
+        code: '404',
+        name: '404',
+        hideInMenu: true,
         component: '404',
       },
     ],

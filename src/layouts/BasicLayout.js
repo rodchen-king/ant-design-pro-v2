@@ -1,22 +1,24 @@
+/* eslint-disable no-const-assign */
 import React, { Suspense } from 'react';
-import { Layout } from 'antd';
+import { Layout, Tabs, Dropdown, Menu, Icon } from 'antd';
 import DocumentTitle from 'react-document-title';
 import isEqual from 'lodash/isEqual';
 import memoizeOne from 'memoize-one';
+import { Route } from 'react-router-dom';
+import router from 'umi/router';
 import { connect } from 'dva';
 import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
 import pathToRegexp from 'path-to-regexp';
 import Media from 'react-media';
 import { formatMessage } from 'umi/locale';
-import Authorized from '@/utils/Authorized';
+import SiderMenu from '@/components/SiderMenu';
+import PageLoading from '@/components/PageLoading';
 import logo from '../assets/logo.svg';
 import Footer from './Footer';
 import Header from './Header';
 import Context from './MenuContext';
-import Exception403 from '../pages/Exception/403';
-import PageLoading from '@/components/PageLoading';
-import SiderMenu from '@/components/SiderMenu';
+
 import { title } from '../defaultSettings';
 import styles from './BasicLayout.less';
 
@@ -24,6 +26,10 @@ import styles from './BasicLayout.less';
 const SettingDrawer = React.lazy(() => import('@/components/SettingDrawer'));
 
 const { Content } = Layout;
+const { TabPane } = Tabs;
+
+let UN_LISTTEN;
+let routerArray = [];
 
 const query = {
   'screen-xs': {
@@ -55,13 +61,24 @@ class BasicLayout extends React.PureComponent {
     super(props);
     this.getPageTitle = memoizeOne(this.getPageTitle);
     this.matchParamsPath = memoizeOne(this.matchParamsPath, isEqual);
+
+    routerArray = this.updateTree(props.route.routes);
+    const homeRouter = routerArray.filter(itemroute => itemroute.key === '/')[0];
+
+    this.state = {
+      listenRouterState: [{ ...homeRouter, key: '/', tab: '首页', closable: false }],
+      listenRouterKey: ['/'],
+      activeKey: '/',
+    };
   }
 
   componentDidMount() {
     const {
       dispatch,
+      history,
       route: { routes, authority },
     } = this.props;
+    let breadcrumbNameMap = [];
     dispatch({
       type: 'user/fetchCurrent',
     });
@@ -71,6 +88,49 @@ class BasicLayout extends React.PureComponent {
     dispatch({
       type: 'menu/getMenuData',
       payload: { routes, authority },
+      callback: value => {
+        breadcrumbNameMap = value;
+      },
+    });
+
+    UN_LISTTEN = history.listen(route => {
+      const { listenRouterState, listenRouterKey } = this.state;
+
+      if (!listenRouterKey.includes(route.pathname + route.search)) {
+        let replaceRouter = routerArray.filter(itemroute => itemroute.key === route.pathname)[0];
+
+        if (!replaceRouter) {
+          replaceRouter = routerArray.filter(itemroute => itemroute.key === '/404')?.[0];
+
+          this.setState({
+            listenRouterState: [
+              ...listenRouterState,
+              { ...replaceRouter, key: route.pathname + route.search, tab: '404' },
+            ],
+            activeKey: route.pathname + route.search,
+            listenRouterKey: [...listenRouterKey, route.pathname + route.search],
+          });
+        } else {
+          this.setState({
+            listenRouterState: [
+              ...listenRouterState,
+              {
+                ...replaceRouter,
+                key: route.pathname + route.search,
+                tab:
+                  this.getPageTitle(route.pathname, breadcrumbNameMap) +
+                  (route.query.title ? ` -  ${route.query.title}` : ''),
+              },
+            ],
+            activeKey: route.pathname + route.search,
+            listenRouterKey: [...listenRouterKey, route.pathname + route.search],
+          });
+        }
+      }
+
+      this.setState({
+        activeKey: route.pathname + route.search,
+      });
     });
   }
 
@@ -81,6 +141,11 @@ class BasicLayout extends React.PureComponent {
     if (isMobile && !preProps.isMobile && !collapsed) {
       this.handleMenuCollapse(false);
     }
+  }
+
+  componentWillUnmount() {
+    // eslint-disable-next-line no-unused-expressions
+    UN_LISTTEN && UN_LISTTEN();
   }
 
   getContext() {
@@ -123,7 +188,7 @@ class BasicLayout extends React.PureComponent {
       defaultMessage: currRouterData.name,
     });
 
-    return `${pageName} - ${title}`;
+    return `${pageName}`;
   };
 
   getLayoutStyle = () => {
@@ -153,22 +218,167 @@ class BasicLayout extends React.PureComponent {
     return <SettingDrawer />;
   };
 
+  filterRouterMenu = rootMenuData => {
+    // eslint-disable-next-line no-shadow
+    const routerArray = [];
+
+    function customerErgodicRoutes(muneData) {
+      muneData.forEach(node => {
+        if (node.children) {
+          // eslint-disable-next-line no-param-reassign
+          customerErgodicRoutes(node.children);
+        } else {
+          routerArray.push({
+            tab: this.getPageTitle(node.path),
+            key: node.path,
+            locale: node.locale,
+            closable: true,
+            content: node.component,
+          });
+        }
+      });
+    }
+
+    customerErgodicRoutes(rootMenuData);
+    return routerArray;
+  };
+
+  updateTree = Tree => {
+    const treeData = Tree;
+    const treeList = [];
+    // 递归获取树列表
+    const getTreeList = data => {
+      data.forEach(node => {
+        if (node.routes && node.routes.length > 0) {
+          getTreeList(node.routes);
+        } else {
+          treeList.push({
+            tab: node.locale,
+            key: node.path,
+            locale: node.locale,
+            closable: true,
+            content: node.component,
+            name: node.name,
+          });
+        }
+      });
+    };
+    getTreeList(treeData);
+    return treeList;
+  };
+
+  // 切换 tab页 router.push(key);
+  onChange = key => {
+    this.setState({
+      activeKey: key,
+    });
+    router.push(key);
+  };
+
+  onHandlePage = e => {
+    const { key } = e;
+    router.push(key);
+  };
+
+  onClickHover = e => {
+    // message.info(`Click on item ${key}`);
+    const { key } = e;
+    const { activeKey, listenRouterState, listenRouterKey, routeKey } = this.state;
+
+    if (key === '1') {
+      this.setState({
+        activeKey: routeKey,
+        listenRouterState: listenRouterState.filter(
+          v => v.key !== activeKey || v.key === routeKey || !v.closable,
+        ),
+        listenRouterKey: listenRouterKey.filter(
+          v => v !== activeKey || v === routeKey || !v.closable,
+        ),
+      });
+    } else if (key === '2') {
+      this.setState({
+        activeKey,
+        listenRouterState: listenRouterState.filter(
+          v => v.key === activeKey || v.key === routeKey || !v.closable,
+        ),
+        listenRouterKey: listenRouterKey.filter(
+          v => v === activeKey || v === routeKey || !v.closable,
+        ),
+      });
+    } else if (key === '3') {
+      this.setState({
+        activeKey: '/',
+        listenRouterState: listenRouterState.filter(v => v.key === routeKey || !v.closable),
+        listenRouterKey: listenRouterKey.filter(v => v === routeKey || !v.closable),
+      });
+    }
+  };
+
+  onEdit = (targetKey, action) => {
+    this[action](targetKey);
+  };
+
+  remove = targetKey => {
+    const { activeKey, listenRouterState } = this.state;
+
+    let newActiviKey = activeKey;
+    let lastIndex;
+
+    listenRouterState.forEach((pane, i) => {
+      if (pane.key === targetKey) {
+        lastIndex = i - 1;
+      }
+    });
+    const tabList = [];
+    const tabListKey = [];
+    listenRouterState.forEach(pane => {
+      if (pane.key !== targetKey) {
+        tabList.push(pane);
+        tabListKey.push(pane.key);
+      }
+    });
+    if (lastIndex >= 0 && activeKey === targetKey) {
+      newActiviKey = tabList[lastIndex].key;
+    }
+    router.push(newActiviKey);
+    this.setState({
+      listenRouterState: tabList,
+      activeKey: newActiviKey,
+      listenRouterKey: tabListKey,
+    });
+  };
+
   render() {
     const {
       navTheme,
       layout: PropsLayout,
-      children,
       location: { pathname },
       isMobile,
       menuData,
       breadcrumbNameMap,
-      route: { routes },
       fixedHeader,
     } = this.props;
 
+    const { listenRouterState, activeKey } = this.state;
+
     const isTop = PropsLayout === 'topmenu';
-    const routerConfig = this.getRouterAuthority(pathname, routes);
     const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
+    const menu = (
+      <Menu onClick={this.onClickHover}>
+        <Menu.Item key="2">关闭其他标签页</Menu.Item>
+        <Menu.Item key="3">关闭全部标签页</Menu.Item>
+      </Menu>
+    );
+    const operations = (
+      <div style={{ position: 'absolute', right: '100px', zIndex: 100 }}>
+        <Dropdown overlay={menu}>
+          <a className="ant-dropdown-link">
+            关闭
+            <Icon type="down" />
+          </a>
+        </Dropdown>
+      </div>
+    );
     const layout = (
       <Layout>
         {isTop && !isMobile ? null : (
@@ -179,6 +389,7 @@ class BasicLayout extends React.PureComponent {
             menuData={menuData}
             isMobile={isMobile}
             {...this.props}
+            // onHandlePage={this.onHandlePage}
           />
         )}
         <Layout
@@ -195,11 +406,38 @@ class BasicLayout extends React.PureComponent {
             {...this.props}
           />
           <Content className={styles.content} style={contentStyle}>
-            <Authorized authority={routerConfig} noMatch={<Exception403 />}>
+            {/* <Authorized authority={routerConfig} noMatch={<Exception403 />}>
               {children}
-            </Authorized>
+              
+            </Authorized> */}
+            <div className={styles.contentBox}>
+              <div className={styles.contentTabUrlBox}>
+                <div className={styles.contentTabUrl}>
+                  <Tabs
+                    activeKey={activeKey}
+                    onChange={this.onChange}
+                    tabBarExtraContent={operations}
+                    type="editable-card"
+                    tabBarStyle={{ background: '#fff' }}
+                    tabPosition="top"
+                    tabBarGutter={-1}
+                    onEdit={this.onEdit}
+                    hideAdd
+                  >
+                    {listenRouterState.map(item => (
+                      <TabPane tab={item.tab} key={item.key} closable={item.closable}>
+                        <Route key={item.key} path={item.path} component={item.content} exact />
+                        {/* {item.component()} */}
+                        {item.path}
+                      </TabPane>
+                    ))}
+                    {/* <Route component={() => (<></>)} /> */}
+                  </Tabs>
+                  <Footer />
+                </div>
+              </div>
+            </div>
           </Content>
-          <Footer />
         </Layout>
       </Layout>
     );
