@@ -1,5 +1,4 @@
 import React from 'react';
-import WrapperStatistic from 'antd/lib/statistic/Statistic';
 
 let modelNameSpace;
 
@@ -9,33 +8,41 @@ function withSubscription(WrappedComponent) {
     constructor(props) {
       super(props);
       this.state = {
-        currentProps: Object.assign({}, this.props.location),
+        currentProps: Object.assign({}, props.location),
+        initData: {}
       };
     }
 
-    componentDidMount() {
-      console.log(modelNameSpace);
+    componentWillMount() {
+      const { dispatch, location } = this.props;
+
+      dispatch({
+        type: `${modelNameSpace}/initData`,
+        payload: location.query.title
+      })
+
+      dispatch({
+        type: `${modelNameSpace}/getExample`,
+        payload: {},
+        callback: (result) => {
+          this.setState({
+            initData: result
+          })
+        }
+      })
     }
 
     componentWillUnmount() {}
 
-    // shouldComponentUpdate(nextProps) {
-    //   if (this.parseHref(nextProps.location) === this.parseHref(this.props.location)) {
-    //     return true;
-    //   }
-
-    //   return false;
-    // }
-
-    parseHref = location => {
-      return location.pathname + location.search;
-    };
+    parseHref = location => location.pathname + location.search;
 
     wrapperDispatch = ({ payload, ...restParams }) => {
       const {
         dispatch,
         location: { query },
       } = this.props;
+      
+      // eslint-disable-next-line react/destructuring-assignment
       const currentStaet = this.props[modelNameSpace].dataGroup;
 
       dispatch({
@@ -45,10 +52,11 @@ function withSubscription(WrappedComponent) {
     };
 
     render() {
-      const { query } = this.state.currentProps;
+      const { initData, currentProps: { query } } = this.state;
 
       const modelNameSpaceProps = {
-        [modelNameSpace]: this.props[modelNameSpace]['dataGroup'][query.title] || {},
+        // eslint-disable-next-line react/destructuring-assignment
+        [modelNameSpace]: this.props[modelNameSpace].dataGroup[query.title] || initData,
       };
 
       return (

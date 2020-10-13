@@ -17,7 +17,9 @@ class ListDetail extends React.PureComponent {
     dispatch({
       type: 'detail/fetch',
       payload: {
-        name: location.query.title,
+        info: {
+          name: location.query.title,
+        }
       },
     });
 
@@ -28,7 +30,7 @@ class ListDetail extends React.PureComponent {
     const { history, location, detail } = this.props;
     return (
       <PageHeaderWrapper page="详情">
-        <div>{detail.name}</div>
+        <div>{detail.info.name}</div>
         <div>
           <input />
         </div>

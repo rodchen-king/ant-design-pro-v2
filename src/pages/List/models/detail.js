@@ -1,15 +1,36 @@
+/* eslint-disable require-yield */
 import { queryRule, removeRule, addRule, updateRule } from '@/services/api';
+
+const initDataExampl = {
+  info: {
+    name: ''
+  }
+}
 
 export default {
   namespace: 'detail',
 
   state: {
-    dataGroup: {},
+    dataGroup: {
+    },
   },
 
   effects: {
-    *fetch({ payload }, { call, put }) {
-      debugger;
+    *getExample({callback}) {
+      if (callback) callback({...initDataExampl})
+    },
+    *initData({payload}, { put }) {
+      yield put({
+        type: 'init',
+        payload: {
+          [payload]: {
+            ...initDataExampl
+          }
+        }
+      }) 
+    } ,
+
+    *fetch({ payload }, { put }) {
       yield put({
         type: 'save',
         payload: {
@@ -44,6 +65,16 @@ export default {
   },
 
   reducers: {
+    init(state, action) {
+      debugger
+      return {
+        ...state,
+        dataGroup: {
+          ...state.dataGroup,
+          ...action.payload
+        }
+      }
+    },
     save(state, action) {
       return {
         ...state,
