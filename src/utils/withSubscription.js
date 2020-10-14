@@ -6,10 +6,10 @@ import React from 'react';
 
 /**
  * updateWrapperModel
- * @param {*} updateKey
- * @param {*} updateValue
- * @param {*} primaryKey
- * @param {*} currentPrimaryKeyState
+ * @param {*} updateKey                 要更新的key
+ * @param {*} updateValue               更新key对应的value
+ * @param {*} primaryKey                当前页面对应的primaryKey
+ * @param {*} currentPrimaryKeyState    primaryKey对应的数据源
  */
 export function updateWrapperModel(updateKey, updateValue, primaryKey, currentPrimaryKeyState) {
   return {
@@ -47,7 +47,7 @@ function wrapperWithSubscription(namespace, primaryKey) {
         dispatch({
           type: `${modelNameSpace}/initData`,
           payload: {
-            primaryKey: location.query.title,
+            primaryKey: location.query[modelPrimaryKey],
           },
         });
 
@@ -70,8 +70,9 @@ function wrapperWithSubscription(namespace, primaryKey) {
       wrapperDispatch = (dispatchPrams) => {
         const {
           dispatch,
-          location: { query },
         } = this.props;
+
+        const { currentProps: { query } } = this.state;
 
         dispatch({
           ...dispatchPrams,
