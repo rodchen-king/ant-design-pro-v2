@@ -1,41 +1,41 @@
 /* eslint-disable require-yield */
 import { queryRule, removeRule, addRule, updateRule } from '@/services/api';
+import { updateWrapperModel } from '@/utils/withSubscription';
 
 const initDataExampl = {
-  info: {
-    name: ''
-  }
-}
+  data: {
+    name: '',
+  },
+};
 
 export default {
   namespace: 'detail',
 
-  state: {
-    dataGroup: {
-    },
-  },
+  state: {},
 
   effects: {
-    *getExample({callback}) {
-      if (callback) callback({...initDataExampl})
+    *getExample({ callback }) {
+      if (callback) callback({ ...initDataExampl });
     },
-    *initData({payload}, { put }) {
+    *initData({ payload }, { put }) {
       yield put({
         type: 'init',
         payload: {
-          [payload]: {
-            ...initDataExampl
-          }
-        }
-      }) 
-    } ,
+          [payload.primaryKey]: {
+            ...initDataExampl,
+          },
+        },
+      });
+    },
 
-    *fetch({ payload }, { put }) {
+    *fetch({ payload }, { put, select }) {
+      const { params, primaryKey } = payload;
+
+      const currentPrimaryKeyState = yield select(state => state.detail[primaryKey]);
+
       yield put({
         type: 'save',
-        payload: {
-          ...payload,
-        },
+        payload: updateWrapperModel('data', params, primaryKey, currentPrimaryKeyState),
       });
     },
     *add({ payload, callback }, { call, put }) {
@@ -66,14 +66,10 @@ export default {
 
   reducers: {
     init(state, action) {
-      debugger
       return {
         ...state,
-        dataGroup: {
-          ...state.dataGroup,
-          ...action.payload
-        }
-      }
+        ...action.payload,
+      };
     },
     save(state, action) {
       return {

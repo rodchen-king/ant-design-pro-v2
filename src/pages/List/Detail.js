@@ -9,7 +9,7 @@ import { Button } from 'antd';
   globalAuthority,
   loading: loading.models.rule,
 }))
-@withSubscription('detail')
+@withSubscription('detail', 'title')
 class ListDetail extends React.PureComponent {
   componentDidMount() {
     const { location, dispatch } = this.props;
@@ -17,9 +17,7 @@ class ListDetail extends React.PureComponent {
     dispatch({
       type: 'detail/fetch',
       payload: {
-        info: {
-          name: location.query.title,
-        }
+        name: location.query.title,
       },
     });
 
@@ -30,7 +28,7 @@ class ListDetail extends React.PureComponent {
     const { history, location, detail } = this.props;
     return (
       <PageHeaderWrapper page="详情">
-        <div>{detail.info.name}</div>
+        <div>{detail.data.name}</div>
         <div>
           <input />
         </div>
