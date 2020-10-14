@@ -1,8 +1,7 @@
 /* eslint-disable require-yield */
-import { queryRule, removeRule, addRule, updateRule } from '@/services/api';
 import { updateWrapperModel } from '@/utils/withSubscription';
 
-const initDataExampl = {
+const initDataExample = {
   data: {
     name: '',
   },
@@ -15,53 +14,27 @@ export default {
 
   effects: {
     *getExample({ callback }) {
-      if (callback) callback({ ...initDataExampl });
+      if (callback) callback({ ...initDataExample });
     },
     *initData({ payload }, { put }) {
       yield put({
         type: 'init',
         payload: {
           [payload.primaryKey]: {
-            ...initDataExampl,
+            ...initDataExample,
           },
         },
       });
     },
 
-    *fetch({ payload }, { put, select }) {
-      const { params, primaryKey } = payload;
-
+    *fetch({ payload, primaryKey }, { put, select }) {
       const currentPrimaryKeyState = yield select(state => state.detail[primaryKey]);
 
       yield put({
         type: 'save',
-        payload: updateWrapperModel('data', params, primaryKey, currentPrimaryKeyState),
+        payload: updateWrapperModel('data', payload, primaryKey, currentPrimaryKeyState),
       });
-    },
-    *add({ payload, callback }, { call, put }) {
-      const response = yield call(addRule, payload);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
-      if (callback) callback();
-    },
-    *remove({ payload, callback }, { call, put }) {
-      const response = yield call(removeRule, payload);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
-      if (callback) callback();
-    },
-    *update({ payload, callback }, { call, put }) {
-      const response = yield call(updateRule, payload);
-      yield put({
-        type: 'save',
-        payload: response,
-      });
-      if (callback) callback();
-    },
+    }
   },
 
   reducers: {
