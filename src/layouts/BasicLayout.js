@@ -78,7 +78,9 @@ class BasicLayout extends React.PureComponent {
       history,
       route: { routes, authority },
     } = this.props;
+
     let breadcrumbNameMap = [];
+
     dispatch({
       type: 'user/fetchCurrent',
     });
@@ -95,8 +97,8 @@ class BasicLayout extends React.PureComponent {
 
     UN_LISTTEN = history.listen(route => {
       const { listenRouterState, listenRouterKey } = this.state;
-
-      if (!listenRouterKey.includes(route.pathname + route.search)) {
+      const currentKey = route.pathname + this.parseQueryString(route.search);
+      if (!listenRouterKey.includes(currentKey)) {
         let replaceRouter = routerArray.filter(itemroute => itemroute.key === route.pathname)[0];
 
         if (!replaceRouter) {
@@ -105,10 +107,10 @@ class BasicLayout extends React.PureComponent {
           this.setState({
             listenRouterState: [
               ...listenRouterState,
-              { ...replaceRouter, key: route.pathname + route.search, tab: '404' },
+              { ...replaceRouter, key: currentKey, tab: '404' },
             ],
-            activeKey: route.pathname + route.search,
-            listenRouterKey: [...listenRouterKey, route.pathname + route.search],
+            activeKey: currentKey,
+            listenRouterKey: [...listenRouterKey, currentKey],
           });
         } else {
           this.setState({
@@ -116,20 +118,20 @@ class BasicLayout extends React.PureComponent {
               ...listenRouterState,
               {
                 ...replaceRouter,
-                key: route.pathname + route.search,
+                key: currentKey,
                 tab:
                   this.getPageTitle(route.pathname, breadcrumbNameMap) +
-                  (route.query.title ? ` -  ${route.query.title}` : ''),
+                  this.getDetailPagePrimaryId(route),
               },
             ],
-            activeKey: route.pathname + route.search,
-            listenRouterKey: [...listenRouterKey, route.pathname + route.search],
+            activeKey: currentKey,
+            listenRouterKey: [...listenRouterKey, currentKey],
           });
         }
       }
 
       this.setState({
-        activeKey: route.pathname + route.search,
+        activeKey: currentKey,
       });
     });
   }
@@ -148,6 +150,19 @@ class BasicLayout extends React.PureComponent {
     UN_LISTTEN && UN_LISTTEN();
   }
 
+  getDetailPagePrimaryId = route => {
+    const detailPageIdEnum = ['id', 'title', 'activityNo'];
+    let titleValue = '';
+
+    Object.keys(route.query).forEach(item => {
+      if (detailPageIdEnum.includes(item) && !titleValue) {
+        titleValue = route.query[item];
+      }
+    });
+
+    return titleValue ? ` - ${titleValue}` : '';
+  };
+
   getContext() {
     const { location, breadcrumbNameMap } = this.props;
     return {
@@ -155,6 +170,18 @@ class BasicLayout extends React.PureComponent {
       breadcrumbNameMap,
     };
   }
+
+  parseQueryString = queryString => {
+    if (!queryString) {
+      return '';
+    }
+
+    if (queryString.indexOf('?') < 0) {
+      return `?${queryString}`;
+    }
+
+    return queryString;
+  };
 
   matchParamsPath = (pathname, breadcrumbNameMap) => {
     const pathKey = Object.keys(breadcrumbNameMap).find(key => pathToRegexp(key).test(pathname));
@@ -218,31 +245,6 @@ class BasicLayout extends React.PureComponent {
     return <SettingDrawer />;
   };
 
-  filterRouterMenu = rootMenuData => {
-    // eslint-disable-next-line no-shadow
-    const routerArray = [];
-
-    function customerErgodicRoutes(muneData) {
-      muneData.forEach(node => {
-        if (node.children) {
-          // eslint-disable-next-line no-param-reassign
-          customerErgodicRoutes(node.children);
-        } else {
-          routerArray.push({
-            tab: this.getPageTitle(node.path),
-            key: node.path,
-            locale: node.locale,
-            closable: true,
-            content: node.component,
-          });
-        }
-      });
-    }
-
-    customerErgodicRoutes(rootMenuData);
-    return routerArray;
-  };
-
   updateTree = Tree => {
     const treeData = Tree;
     const treeList = [];
@@ -302,14 +304,14 @@ class BasicLayout extends React.PureComponent {
           v => v.key === activeKey || v.key === routeKey || !v.closable,
         ),
         listenRouterKey: listenRouterKey.filter(
-          v => v === activeKey || v === routeKey || !v.closable,
+          v => v === activeKey || v === routeKey || v === '/',
         ),
       });
     } else if (key === '3') {
       this.setState({
         activeKey: '/',
         listenRouterState: listenRouterState.filter(v => v.key === routeKey || !v.closable),
-        listenRouterKey: listenRouterKey.filter(v => v === routeKey || !v.closable),
+        listenRouterKey: listenRouterKey.filter(v => v === routeKey || v === '/'),
       });
     }
   };
@@ -428,7 +430,6 @@ class BasicLayout extends React.PureComponent {
                       <TabPane tab={item.tab} key={item.key} closable={item.closable}>
                         <Route key={item.key} path={item.path} component={item.content} exact />
                         {/* {item.component()} */}
-                        {item.path}
                       </TabPane>
                     ))}
                     {/* <Route component={() => (<></>)} /> */}
