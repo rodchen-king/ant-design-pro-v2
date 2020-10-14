@@ -62,22 +62,20 @@ function wrapperWithSubscription(namespace, primaryKey) {
         });
       }
 
-      componentWillUnmount() {}
+      componentWillUnmount() {
+        // 可以自定扩展如何消除当前primarykey对应的数据
+        // 一般情况下，前端业务组件会自己清除state的数据
+      }
 
-      parseHref = location => location.pathname + location.search;
-
-      wrapperDispatch = ({ payload, ...restParams }) => {
+      wrapperDispatch = (dispatchPrams) => {
         const {
           dispatch,
           location: { query },
         } = this.props;
 
         dispatch({
-          ...restParams,
-          payload: {
-            params: payload,
-            primaryKey: query[modelPrimaryKey],
-          },
+          ...dispatchPrams,
+          primaryKey: query[modelPrimaryKey],
         });
       };
 
