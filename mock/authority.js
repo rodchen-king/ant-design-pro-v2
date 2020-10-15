@@ -6,6 +6,7 @@ function getAuthorityMenu(req, res) {
     'form_menu',
     'form_basicForm_page',
     'list_tableDetail_page',
+    'list_tableCreate_page'
   ]);
 }
 

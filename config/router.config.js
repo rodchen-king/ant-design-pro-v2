@@ -60,6 +60,14 @@ export default [
             code: 'list_tableDetail_page',
             component: './List/Detail',
           },
+          {
+            path: '/List/table-create',
+            // hideInMenu: true,
+            name: 'create',
+            code: 'list_tableCreate_page',
+            component: './List/Create',
+            isOnlyOnePage: true
+          },
         ],
       },
       {

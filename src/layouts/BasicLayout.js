@@ -61,7 +61,6 @@ class BasicLayout extends React.PureComponent {
     super(props);
     this.getPageTitle = memoizeOne(this.getPageTitle);
     this.matchParamsPath = memoizeOne(this.matchParamsPath, isEqual);
-
     routerArray = this.updateTree(props.route.routes);
     const homeRouter = routerArray.filter(itemroute => itemroute.key === '/')[0];
 
@@ -97,9 +96,17 @@ class BasicLayout extends React.PureComponent {
 
     UN_LISTTEN = history.listen(route => {
       const { listenRouterState, listenRouterKey } = this.state;
-      const currentKey = route.pathname + this.parseQueryString(route.search);
+      let replaceRouter = routerArray.filter(itemroute => itemroute.key === route.pathname)[0];
+
+      let currentKey = '' 
+
+      if (replaceRouter && replaceRouter.isOnlyOnePage) {
+        currentKey = route.pathname
+      } else {
+        currentKey = route.pathname + this.parseQueryString(route.search);
+      }
+      
       if (!listenRouterKey.includes(currentKey)) {
-        let replaceRouter = routerArray.filter(itemroute => itemroute.key === route.pathname)[0];
 
         if (!replaceRouter) {
           replaceRouter = routerArray.filter(itemroute => itemroute.key === '/404')?.[0];
@@ -261,6 +268,7 @@ class BasicLayout extends React.PureComponent {
             closable: true,
             content: node.component,
             name: node.name,
+            isOnlyOnePage: node.isOnlyOnePage,
           });
         }
       });
@@ -428,7 +436,7 @@ class BasicLayout extends React.PureComponent {
                   >
                     {listenRouterState.map(item => (
                       <TabPane tab={item.tab} key={item.key} closable={item.closable}>
-                        <Route key={item.key} path={item.path} component={item.content} exact />
+                        <Route key={item.key} component={item.content} exact />
                         {/* {item.component()} */}
                       </TabPane>
                     ))}
