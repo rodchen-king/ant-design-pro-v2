@@ -36,18 +36,19 @@ function wrapperWithSubscription(namespace, primaryKey) {
       constructor(props) {
         super(props);
         this.state = {
-          currentProps: Object.assign({}, props.location),
+          primaryKeyValue: this.getPrimaryKeyValue(),
           initData: {},
         };
       }
 
       componentWillMount() {
-        const { dispatch, location } = this.props;
+        const { dispatch } = this.props;
+        const { primaryKeyValue } = this.state;
 
         dispatch({
           type: `${modelNameSpace}/initData`,
           payload: {
-            primaryKey: location.query[modelPrimaryKey],
+            primaryKey: primaryKeyValue,
           },
         });
 
@@ -67,28 +68,29 @@ function wrapperWithSubscription(namespace, primaryKey) {
         // 一般情况下，前端业务组件会自己清除state的数据
       }
 
-      wrapperDispatch = (dispatchPrams) => {
-        const {
-          dispatch,
-        } = this.props;
+      // for query and match
+      getPrimaryKeyValue = () => {
+        const { match, location } = this.props;
 
-        const { currentProps: { query } } = this.state;
+        return location.query[modelPrimaryKey] || match.params[modelPrimaryKey];
+      };
+
+      wrapperDispatch = dispatchPrams => {
+        const { dispatch } = this.props;
+        const { primaryKeyValue } = this.state;
 
         dispatch({
           ...dispatchPrams,
-          primaryKey: query[modelPrimaryKey],
+          primaryKey: primaryKeyValue,
         });
       };
 
       render() {
-        const {
-          initData,
-          currentProps: { query },
-        } = this.state;
+        const { initData, primaryKeyValue } = this.state;
 
         const modelNameSpaceProps = {
           // eslint-disable-next-line react/destructuring-assignment
-          [modelNameSpace]: this.props[modelNameSpace][query[modelPrimaryKey]] || initData,
+          [modelNameSpace]: this.props[modelNameSpace][primaryKeyValue] || initData,
         };
 
         return (

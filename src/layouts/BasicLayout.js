@@ -10,6 +10,7 @@ import { connect } from 'dva';
 import { ContainerQuery } from 'react-container-query';
 import classNames from 'classnames';
 import pathToRegexp from 'path-to-regexp';
+import matchPath from '@/utils/matchPath';
 import Media from 'react-media';
 import { formatMessage } from 'umi/locale';
 import SiderMenu from '@/components/SiderMenu';
@@ -56,6 +57,8 @@ const query = {
   },
 };
 
+export const RouterContext = React.createContext({});
+
 class BasicLayout extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -68,6 +71,8 @@ class BasicLayout extends React.PureComponent {
       listenRouterState: [{ ...homeRouter, key: '/', tab: '首页', closable: false }],
       listenRouterKey: ['/'],
       activeKey: '/',
+
+      customerMatchs: [],
     };
   }
 
@@ -95,19 +100,20 @@ class BasicLayout extends React.PureComponent {
     });
 
     UN_LISTTEN = history.listen(route => {
-      const { listenRouterState, listenRouterKey } = this.state;
-      let replaceRouter = routerArray.filter(itemroute => itemroute.key === route.pathname)[0];
+      const { listenRouterState, listenRouterKey, customerMatchs } = this.state;
+      let replaceRouter = routerArray.filter(itemRoute =>
+        pathToRegexp(itemRoute.key || '').test(route.pathname),
+      )[0];
 
-      let currentKey = '' 
+      let currentKey = '';
 
       if (replaceRouter && replaceRouter.isOnlyOnePage) {
-        currentKey = route.pathname
+        currentKey = route.pathname;
       } else {
         currentKey = route.pathname + this.parseQueryString(route.search);
       }
-      
-      if (!listenRouterKey.includes(currentKey)) {
 
+      if (!listenRouterKey.includes(currentKey)) {
         if (!replaceRouter) {
           replaceRouter = routerArray.filter(itemroute => itemroute.key === '/404')?.[0];
 
@@ -120,6 +126,8 @@ class BasicLayout extends React.PureComponent {
             listenRouterKey: [...listenRouterKey, currentKey],
           });
         } else {
+          const match = matchPath(route.pathname, { path: replaceRouter.key });
+
           this.setState({
             listenRouterState: [
               ...listenRouterState,
@@ -128,11 +136,12 @@ class BasicLayout extends React.PureComponent {
                 key: currentKey,
                 tab:
                   this.getPageTitle(route.pathname, breadcrumbNameMap) +
-                  this.getDetailPagePrimaryId(route),
+                  this.getDetailPagePrimaryId(route, match),
               },
             ],
             activeKey: currentKey,
             listenRouterKey: [...listenRouterKey, currentKey],
+            customerMatchs: [...customerMatchs, { key: currentKey, match }],
           });
         }
       }
@@ -157,13 +166,21 @@ class BasicLayout extends React.PureComponent {
     UN_LISTTEN && UN_LISTTEN();
   }
 
-  getDetailPagePrimaryId = route => {
+  getDetailPagePrimaryId = (route, match) => {
     const detailPageIdEnum = ['id', 'title', 'activityNo'];
     let titleValue = '';
 
+    // 处理query类型
     Object.keys(route.query).forEach(item => {
       if (detailPageIdEnum.includes(item) && !titleValue) {
         titleValue = route.query[item];
+      }
+    });
+
+    // 处理match
+    Object.keys(match.params).forEach(item => {
+      if (detailPageIdEnum.includes(item) && !titleValue) {
+        titleValue = match.params[item];
       }
     });
 
@@ -314,12 +331,16 @@ class BasicLayout extends React.PureComponent {
         listenRouterKey: listenRouterKey.filter(
           v => v === activeKey || v === routeKey || v === '/',
         ),
+        customerMatchs: listenRouterState.filter(
+          v => v.key === activeKey || v.key === routeKey || !v.closable,
+        ),
       });
     } else if (key === '3') {
       this.setState({
         activeKey: '/',
         listenRouterState: listenRouterState.filter(v => v.key === routeKey || !v.closable),
         listenRouterKey: listenRouterKey.filter(v => v === routeKey || v === '/'),
+        customerMatchs: listenRouterState.filter(v => v.key === routeKey || !v.closable),
       });
     }
   };
@@ -369,7 +390,7 @@ class BasicLayout extends React.PureComponent {
       fixedHeader,
     } = this.props;
 
-    const { listenRouterState, activeKey } = this.state;
+    const { listenRouterState, activeKey, customerMatchs } = this.state;
 
     const isTop = PropsLayout === 'topmenu';
     const contentStyle = !fixedHeader ? { paddingTop: 0 } : {};
@@ -436,7 +457,9 @@ class BasicLayout extends React.PureComponent {
                   >
                     {listenRouterState.map(item => (
                       <TabPane tab={item.tab} key={item.key} closable={item.closable}>
-                        <Route key={item.key} component={item.content} exact />
+                        <RouterContext.Provider value={customerMatchs}>
+                          <Route key={item.key} component={item.content} exact />
+                        </RouterContext.Provider>
                         {/* {item.component()} */}
                       </TabPane>
                     ))}

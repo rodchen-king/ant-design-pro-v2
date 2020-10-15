@@ -11,6 +11,7 @@ for (let i = 0; i < 46; i += 1) {
       'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
     ][i % 2],
     name: `TradeCode ${i}`,
+    name1: `TradeCode ${i}`,
     title: `一个任务名称 ${i}`,
     owner: '曲丽丽',
     desc: '这是一段描述',
