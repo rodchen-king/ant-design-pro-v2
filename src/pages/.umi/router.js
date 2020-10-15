@@ -228,6 +228,34 @@ const routes = [
             exact: true,
           },
           {
+            path: '/List/table-create',
+            name: 'create',
+            code: 'list_tableCreate_page',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  app: require('@tmp/dva').getApp(),
+                  models: () => [
+                    import(/* webpackChunkName: 'p__List__models__detail.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/List/models/detail.js').then(
+                      m => {
+                        return { namespace: 'detail', ...m.default };
+                      },
+                    ),
+                    import(/* webpackChunkName: 'p__List__models__rule.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/List/models/rule.js').then(
+                      m => {
+                        return { namespace: 'rule', ...m.default };
+                      },
+                    ),
+                  ],
+                  component: () =>
+                    import(/* webpackChunkName: "layouts__BasicLayout" */ '../List/Create'),
+                  LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../List/Create').default,
+            isOnlyOnePage: true,
+            exact: true,
+          },
+          {
             component: () =>
               React.createElement(
                 require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
