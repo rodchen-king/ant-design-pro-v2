@@ -61,12 +61,19 @@ export default [
             component: './List/Detail',
           },
           {
+            path: '/List/:title/table-match-detail',
+            hideInMenu: true,
+            name: 'detail',
+            code: 'list_tableDetail_page',
+            component: './List/MatchDetail',
+          },
+          {
             path: '/List/table-create',
             // hideInMenu: true,
             name: 'create',
             code: 'list_tableCreate_page',
             component: './List/Create',
-            isOnlyOnePage: true
+            isOnlyOnePage: true,
           },
         ],
       },

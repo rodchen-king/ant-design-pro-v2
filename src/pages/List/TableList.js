@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
+import router from 'umi/router';
 import {
   Row,
   Col,
@@ -311,6 +312,28 @@ class TableList extends PureComponent {
 
         return codeAuthorityObject['20001'] ? (
           <a href={`#/List/table-detail?title=${value}`}>{value}</a>
+        ) : (
+          <span>{value}</span>
+        );
+      },
+    },
+    {
+      title: '规则名称测试match',
+      dataIndex: 'name1',
+      render: value => {
+        const {
+          globalAuthority: { codeAuthorityObject },
+        } = this.props;
+
+        return codeAuthorityObject['20001'] ? (
+          <a
+            href={`#/List/${value}/table-match-detail`}
+            onClick={() => {
+              router.push();
+            }}
+          >
+            {value}
+          </a>
         ) : (
           <span>{value}</span>
         );
