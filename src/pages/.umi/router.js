@@ -228,6 +228,34 @@ const routes = [
             exact: true,
           },
           {
+            path: '/List/:title/table-match-detail',
+            hideInMenu: true,
+            name: 'detail',
+            code: 'list_tableDetail_page',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  app: require('@tmp/dva').getApp(),
+                  models: () => [
+                    import(/* webpackChunkName: 'p__List__models__detail.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/List/models/detail.js').then(
+                      m => {
+                        return { namespace: 'detail', ...m.default };
+                      },
+                    ),
+                    import(/* webpackChunkName: 'p__List__models__rule.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/List/models/rule.js').then(
+                      m => {
+                        return { namespace: 'rule', ...m.default };
+                      },
+                    ),
+                  ],
+                  component: () =>
+                    import(/* webpackChunkName: "layouts__BasicLayout" */ '../List/MatchDetail'),
+                  LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../List/MatchDetail').default,
+            exact: true,
+          },
+          {
             path: '/List/table-create',
             name: 'create',
             code: 'list_tableCreate_page',
@@ -253,6 +281,133 @@ const routes = [
                 })
               : require('../List/Create').default,
             isOnlyOnePage: true,
+            exact: true,
+          },
+          {
+            component: () =>
+              React.createElement(
+                require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
+                  .default,
+                { pagesPath: 'src/pages', hasRoutesInConfig: true },
+              ),
+          },
+        ],
+      },
+      {
+        path: '/market',
+        icon: 'table',
+        name: 'market',
+        code: 'list_menu',
+        routes: [
+          {
+            path: '/market/table-market',
+            name: 'searchtable',
+            code: 'list_tableList_page',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  app: require('@tmp/dva').getApp(),
+                  models: () => [
+                    import(/* webpackChunkName: 'p__Market__models__detail.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Market/models/detail.js').then(
+                      m => {
+                        return { namespace: 'detail', ...m.default };
+                      },
+                    ),
+                    import(/* webpackChunkName: 'p__Market__models__rule.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Market/models/rule.js').then(
+                      m => {
+                        return { namespace: 'rule', ...m.default };
+                      },
+                    ),
+                  ],
+                  component: () =>
+                    import(/* webpackChunkName: "layouts__BasicLayout" */ '../Market/TableList'),
+                  LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../Market/TableList').default,
+            exact: true,
+          },
+          {
+            path: '/market/table-detail',
+            hideInMenu: true,
+            name: 'detail',
+            code: 'list_tableDetail_page',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  app: require('@tmp/dva').getApp(),
+                  models: () => [
+                    import(/* webpackChunkName: 'p__Market__models__detail.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Market/models/detail.js').then(
+                      m => {
+                        return { namespace: 'detail', ...m.default };
+                      },
+                    ),
+                    import(/* webpackChunkName: 'p__Market__models__rule.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Market/models/rule.js').then(
+                      m => {
+                        return { namespace: 'rule', ...m.default };
+                      },
+                    ),
+                  ],
+                  component: () =>
+                    import(/* webpackChunkName: "layouts__BasicLayout" */ '../Market/Detail'),
+                  LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../Market/Detail').default,
+            exact: true,
+          },
+          {
+            path: '/market/table-create',
+            hideInMenu: true,
+            name: 'create',
+            code: 'list_tableCreate_page',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  app: require('@tmp/dva').getApp(),
+                  models: () => [
+                    import(/* webpackChunkName: 'p__Market__models__detail.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Market/models/detail.js').then(
+                      m => {
+                        return { namespace: 'detail', ...m.default };
+                      },
+                    ),
+                    import(/* webpackChunkName: 'p__Market__models__rule.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Market/models/rule.js').then(
+                      m => {
+                        return { namespace: 'rule', ...m.default };
+                      },
+                    ),
+                  ],
+                  component: () =>
+                    import(/* webpackChunkName: "layouts__BasicLayout" */ '../Market/Detail'),
+                  LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../Market/Detail').default,
+            exact: true,
+          },
+          {
+            path: '/market/table-edit',
+            hideInMenu: true,
+            name: 'edit',
+            code: 'list_tableDetail_page',
+            component: __IS_BROWSER
+              ? _dvaDynamic({
+                  app: require('@tmp/dva').getApp(),
+                  models: () => [
+                    import(/* webpackChunkName: 'p__Market__models__detail.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Market/models/detail.js').then(
+                      m => {
+                        return { namespace: 'detail', ...m.default };
+                      },
+                    ),
+                    import(/* webpackChunkName: 'p__Market__models__rule.js' */ '/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/pages/Market/models/rule.js').then(
+                      m => {
+                        return { namespace: 'rule', ...m.default };
+                      },
+                    ),
+                  ],
+                  component: () =>
+                    import(/* webpackChunkName: "layouts__BasicLayout" */ '../Market/Detail'),
+                  LoadingComponent: require('/Users/chenzilong/workspace/study/ant-design-pro/ant-design-pro-v2/src/components/PageLoading/index')
+                    .default,
+                })
+              : require('../Market/Detail').default,
             exact: true,
           },
           {

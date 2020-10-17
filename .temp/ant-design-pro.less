@@ -2235,6 +2235,55 @@
 }
 
 /* 
+  Convert to from  src/pages/Market/TableList.less
+ */
+
+.antd-pro-pages-market-table-list-tableList {
+  .antd-pro-pages-market-table-list-tableListOperator {
+    margin-bottom: 16px;
+    button {
+      margin-right: 8px;
+    }
+  }
+}
+
+.antd-pro-pages-market-table-list-tableListForm {
+  .ant-form-item {
+    margin-bottom: 24px;
+    margin-right: 0;
+    display: flex;
+    > .ant-form-item-label {
+      width: auto;
+      line-height: 32px;
+      padding-right: 8px;
+    }
+    .ant-form-item-control {
+      line-height: 32px;
+    }
+  }
+  .ant-form-item-control-wrapper {
+    flex: 1;
+  }
+  .antd-pro-pages-market-table-list-submitButtons {
+    display: block;
+    white-space: nowrap;
+    margin-bottom: 24px;
+  }
+}
+
+@media screen and (max-width: @screen-lg) {
+  .tableListForm :global(.ant-form-item) {
+    margin-right: 24px;
+  }
+}
+
+@media screen and (max-width: @screen-md) {
+  .tableListForm :global(.ant-form-item) {
+    margin-right: 8px;
+  }
+}
+
+/* 
   Convert to from  src/pages/Profile/AdvancedProfile.less
  */
 

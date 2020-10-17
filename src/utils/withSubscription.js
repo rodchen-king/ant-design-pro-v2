@@ -6,16 +6,15 @@ import React from 'react';
 
 /**
  * updateWrapperModel
- * @param {*} updateKey                 要更新的key
- * @param {*} updateValue               更新key对应的value
+ * @param {*} updateStateObject         要更新state的健值对
  * @param {*} primaryKey                当前页面对应的primaryKey
  * @param {*} currentPrimaryKeyState    primaryKey对应的数据源
  */
-export function updateWrapperModel(updateKey, updateValue, primaryKey, currentPrimaryKeyState) {
+export function updateWrapperModel(updateStateObject, primaryKey, currentPrimaryKeyState) {
   return {
     [primaryKey]: {
       ...currentPrimaryKeyState,
-      [updateKey]: updateValue,
+      ...updateStateObject,
     },
   };
 }
@@ -28,7 +27,7 @@ export function updateWrapperModel(updateKey, updateValue, primaryKey, currentPr
 function wrapperWithSubscription(namespace, primaryKey) {
   // eslint-disable-next-line no-use-before-define
   const modelNameSpace = namespace;
-  const modelPrimaryKey = primaryKey;
+  let modelPrimaryKey = primaryKey;
 
   return function withSubscription(WrappedComponent) {
     // ...并返回另一个组件...
@@ -52,7 +51,7 @@ function wrapperWithSubscription(namespace, primaryKey) {
           },
         });
 
-        dispatch({
+        return dispatch({
           type: `${modelNameSpace}/getExample`,
           payload: {},
           callback: result => {
@@ -70,9 +69,22 @@ function wrapperWithSubscription(namespace, primaryKey) {
 
       // for query and match
       getPrimaryKeyValue = () => {
-        const { match, location } = this.props;
+        if (!Array.isArray(modelPrimaryKey)) modelPrimaryKey = [modelPrimaryKey];
 
-        return location.query[modelPrimaryKey] || match.params[modelPrimaryKey];
+        return this.parseArrayPrimaryKeyValue(modelPrimaryKey);
+      };
+
+      // 如果传入进来的是一个数组
+      parseArrayPrimaryKeyValue = keyArray => {
+        const { match, location } = this.props;
+        let primaryValue = '';
+
+        keyArray.forEach(item => {
+          primaryValue += location.query[item] ? location.query[item] : '';
+          primaryValue += match.params[item] ? match[item] : '';
+        });
+
+        return primaryValue;
       };
 
       wrapperDispatch = dispatchPrams => {

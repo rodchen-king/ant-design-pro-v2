@@ -78,6 +78,41 @@ export default [
         ],
       },
       {
+        path: '/market',
+        icon: 'table',
+        name: 'market',
+        code: 'list_menu',
+        routes: [
+          {
+            path: '/market/table-market',
+            name: 'searchtable',
+            code: 'list_tableList_page',
+            component: './Market/TableList',
+          },
+          {
+            path: '/market/table-detail',
+            hideInMenu: true,
+            name: 'detail',
+            code: 'list_tableDetail_page',
+            component: './Market/Detail',
+          },
+          {
+            path: '/market/table-create',
+            hideInMenu: true,
+            name: 'create',
+            code: 'list_tableCreate_page',
+            component: './Market/Detail',
+          },
+          {
+            path: '/market/table-edit',
+            hideInMenu: true,
+            name: 'edit',
+            code: 'list_tableDetail_page',
+            component: './Market/Detail',
+          },
+        ],
+      },
+      {
         path: '/profile',
         name: 'profile',
         icon: 'profile',
