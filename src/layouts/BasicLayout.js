@@ -108,9 +108,10 @@ class BasicLayout extends React.PureComponent {
       let currentKey = '';
 
       if (replaceRouter && replaceRouter.isOnlyOnePage) {
-        currentKey = route.pathname;
+        // 处理中英文和特殊字符
+        currentKey = decodeURIComponent(route.pathname);
       } else {
-        currentKey = route.pathname + this.parseQueryString(route.search);
+        currentKey = decodeURIComponent(route.pathname + this.parseQueryString(route.search));
       }
 
       if (!listenRouterKey.includes(currentKey)) {
@@ -167,7 +168,7 @@ class BasicLayout extends React.PureComponent {
   }
 
   getDetailPagePrimaryId = (route, match) => {
-    const detailPageIdEnum = ['id', 'title', 'activityNo'];
+    const detailPageIdEnum = ['id', 'title', 'activityNo', 'templateName'];
     let titleValue = '';
 
     // 处理query类型
