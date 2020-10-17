@@ -32,9 +32,9 @@ export default {
 
       yield put({
         type: 'save',
-        payload: updateWrapperModel('data', payload, primaryKey, currentPrimaryKeyState),
+        payload: updateWrapperModel({ data: payload }, primaryKey, currentPrimaryKeyState),
       });
-    }
+    },
   },
 
   reducers: {
