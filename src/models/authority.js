@@ -5,6 +5,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-prototype-builtins */
 import { getAuthority } from '@/services/authority';
+import { unionBy, uniq } from 'lodash';
 
 export default {
   namespace: 'globalAuthority',
@@ -20,9 +21,15 @@ export default {
      * 获取当前页面的权限控制
      */
     *getAuthorityForPage({ payload }, { put, call, select }) {
+      const originNalHasAuthorityCodeArray = yield select(
+        state => state.globalAuthority.hasAuthorityCodeArray,
+      );
+      const originNalCodeAuthorityObject = yield select(
+        state => state.globalAuthority.codeAuthorityObject,
+      );
       // 这里的资源code都是自己加载的
       const pageCodeArray = yield select(state => state.globalAuthority.pageCodeArray);
-      const response = yield call(getAuthority, pageCodeArray);
+      const response = yield call(getAuthority, uniq(pageCodeArray));
       const hasAuthorityCodeArray = response || [];
       const codeAuthorityObject = {};
 
@@ -34,8 +41,11 @@ export default {
       yield put({
         type: 'save',
         payload: {
-          hasAuthorityCodeArray,
-          codeAuthorityObject,
+          hasAuthorityCodeArray: unionBy(
+            originNalHasAuthorityCodeArray.concat(hasAuthorityCodeArray),
+            'code',
+          ),
+          codeAuthorityObject: { ...originNalCodeAuthorityObject, ...codeAuthorityObject },
         },
       });
     },
@@ -48,7 +58,7 @@ export default {
       yield put({
         type: 'save',
         payload: {
-          pageCodeArray: pageCodeArray.concat(codeArray),
+          pageCodeArray: uniq(pageCodeArray.concat(codeArray)),
         },
       });
     },

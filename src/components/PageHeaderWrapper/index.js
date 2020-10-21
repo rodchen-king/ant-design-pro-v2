@@ -16,12 +16,12 @@ class PageHeaderWrapper extends PureComponent {
     });
   }
 
-  componentWillUnmount() {
-    const { dispatch } = this.props;
-    dispatch({
-      type: 'globalAuthority/resetAuthorityForPage',
-    });
-  }
+  // componentWillUnmount() {
+  //   const { dispatch } = this.props;
+  //   dispatch({
+  //     type: 'globalAuthority/resetAuthorityForPage',
+  //   });
+  // }
 
   render() {
     const { children, contentWidth, wrapperClassName, top, loading, ...restProps } = this.props;
