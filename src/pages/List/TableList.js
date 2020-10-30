@@ -24,7 +24,11 @@ import {
 import StandardTable from "@/components/StandardTable";
 import PageHeaderWrapper from "@/components/PageHeaderWrapper";
 
+import injectEnumFunction from "@/common/commonEnum";
 import styles from "./TableList.less";
+
+// eslint-disable-next-line camelcase
+const { userAccountTypeEnum } = injectEnumFunction(["userAccountTypeEnum"]);
 
 const FormItem = Form.Item;
 const { Step } = Steps;
@@ -656,6 +660,8 @@ class TableList extends PureComponent {
         <Menu.Item key="approval">批量审批</Menu.Item>
       </Menu>
     );
+
+    console.log(userAccountTypeEnum);
 
     const parentMethods = {
       handleAdd: this.handleAdd,
